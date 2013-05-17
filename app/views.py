@@ -1,6 +1,10 @@
 from flask import render_template, flash, redirect
 from app import app
 from forms import LoginForm
+from db import DB
+
+# import db
+db = DB()
 
 @app.route('/')
 @app.route('/index')
@@ -16,10 +20,19 @@ def index():
             'body': 'Another damned article title'
         }
     ]
+    # start testing db
+    import datetime
+    user = {"nickname": "timmy",
+            "password": "tommy",
+            "date": datetime.datetime.utcnow()}
+    userid = db.users.insert(user)
+
+    # stop testing db   
     return render_template("index.html",
         title = 'Home',
         user = user,
-        posts = posts) 
+        posts = posts,
+        userid = userid) 
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():

@@ -1,7 +1,15 @@
+<!-- index page content -->
+
 {% extends "base.html" %}
 {% block content %}
-<h1>Hello, {{user.nickname}}.</h1>
-{% for post in posts %}
-<div><p>{{post.author.nickname}} added: <b>{{post.body}}</b></p></div>
-{% endfor %}
+    <div class="jumbo">
+        <h2>Hello, {{user.nickname}}.</h2>
+        <!-- start testing db -->
+        <h2>Current Collections: {{collections}}</h2>
+        <h2>Userid: {{userid}}</h2>
+        <!-- stop testing db -->
+        {% for post in posts %}
+        <div><h3>{{post.author.nickname}} added: <b>{{post.body}}</b></h3></div>
+        {% endfor %}
+    </div>
 {% endblock %}

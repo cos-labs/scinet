@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         {% if title %}
@@ -5,11 +6,24 @@
         {% else %}
         <title>Crowd Scholar</title>
         {% endif %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
 
     <body>
-        <div>Crowd Scholar: <a href="/index">Home</a></div>
-        <hr>
+        <header>
+            <div class="container">
+                <h1 class="logo">Crowd Scholar Menu</h1>
+                <nav>
+                    <ul class="menu">
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="/login">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+           
+        <div class="container">
+        <!-- need to document this part -->
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -20,5 +34,7 @@
         {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
+        </div>
+        
     </body>
 </html>
