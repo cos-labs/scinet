@@ -1,0 +1,21 @@
+// modelview for drop box
+function Author(data) {
+    this.name = ko.observable(data.name);
+}
+
+function CitationListViewModel() {
+    // data
+    var self = this;
+    self.authors = ko.observableArray([]);
+    self.newName = ko.observable();
+
+    // operators
+    // add a new author to authors[]
+    self.addAuthor = function() {
+        self.authors.push(new Author({ name: this.newName() }));
+        self.newName=("");
+    };
+    // remove an author from authors[]
+    self.removeAuthor = function(author) { self.authors.remove(author) };
+
+ko.applyBindings(new CitationListViewModel());

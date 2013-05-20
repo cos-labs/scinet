@@ -2,4 +2,6 @@
 *.swp
 *.lock
 *.db
+*.bak
+./.idea/
 app/depricated/*
