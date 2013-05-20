@@ -3,5 +3,5 @@
 *.lock
 *.db
 *.bak
-./.idea/
+.idea/*
 app/depricated/*
