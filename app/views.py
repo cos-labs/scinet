@@ -1,46 +1,24 @@
-from flask import render_template, flash, redirect
+"""
+handles get/post requests for crowd source
+"""
+import json
+from flask import render_template, flash, redirect, request, url_for
 from app import app
-from forms import LoginForm
 from db import DB
 
-# import db
+# connect to the database
 db = DB()
 
-@app.route('/')
-@app.route('/index')
-def index():
-    user = { 'nickname': 'Some Dude' } # placeholder user
-    posts = [ # placeholder posts
-        {
-            'author': {'nickname': 'Timmy'},
-            'body': 'Some article title'
-        },
-        {
-            'author': {'nickname': 'Tom'},
-            'body': 'Another damned article title'
-        }
-    ]
-    # start testing db
-    import datetime
-    user = {"nickname": "timmy",
-            "password": "tommy",
-            "date": datetime.datetime.utcnow()}
-    userid = db.users.insert(user)
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+@app.route('/dropbox', methods=['GET', 'POST'])
+def dropbox():
+    """dropbox for users to donate of raw or specific data for citations to our DB"""
+    # if post -- convert and store citation
+    if request.method == 'POST' or request.method == 'post':
+        # convert post data to citation
+        citation = json.loads(request.data)
+        article_id = db.articles.insert(citation)
+        return str(article_id)
 
-    # stop testing db   
-    return render_template("index.html",
-        title = 'Home',
-        user = user,
-        posts = posts,
-        userid = userid) 
-
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for OpenID="' + form.openid.data +'",remember_me=' + str(form.remember_me.data))
-        return redirect('/index')
-    return render_template('login.html',
-        title = 'Sign In',
-        form = form,
-        providers = app.config['OPENID_PROVIDERS'])
+    return render_template("dropbox.html")

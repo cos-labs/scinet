@@ -1,0 +1,56 @@
+<!-- extends from base layout
+     point of access for users to donate raw or specifc
+     citation data for submission to crowd source DB -->
+{% extends "base.html" %}
+
+{% block content%}
+
+<div class="jumbo">
+    <h2>Drop box</h2>
+    <!-- start knockoutjs script -->
+
+    <h3>You can either paste the raw citation here:</h3>
+    <!-- FILL raw data -->
+        <p>Raw Data:</p>
+        <textarea data-bind="value: citation.raw_data" rows='5' cols='60' placeholder="Paste the raw citation data here"></textarea>
+
+    <!-- FILL individual fields -->
+    <h3>-- Or -- </h3>
+    <h3>fill out individual fields here:</h3>
+    <!-- add author form -->
+        <p>Author(s):</p>
+        <p>
+            <input data-bind="value: given" placeholder="Enter the author's first name here..." />
+            <input data-bind="value: family" placeholder="Enter the author's last name here..." />
+            <button data-bind="click: addAuthor">Add</button>
+        </p>
+
+    <ol data-bind="foreach: citation.authors">
+        <li>
+            <input data-bind="value: given" /> <input data-bind="value: family" />
+            <a href="#" data-bind="click: $parent.removeAuthor">Delete author</a>
+        </li>
+    </ol>
+
+    <!-- add other fields -->
+    <p>Title:</p>
+    <input data-bind="value: citation.title" placeholder="Enter the article's title here..." />
+
+    <p>Journal:</p>
+    <input data-bind="value: citation.container_title" placeholder="Enter the journal here..." />
+
+    <p>Date:</p>
+    <input data-bind="value: citation.date" placeholder="Enter the publication date here..." />
+
+    <!-- FILL references -->
+    <h3>And finally, drop off any references!</h3>
+    <p>Reference(s):</p>
+    <textarea data-bind="value: citation.references" rows='5' cols='60' placeholder="Paste the article references here..."></textarea>
+
+    <!-- submit and view resulting JSON -->
+    <p><button data-bind="click: save">Submit citation</button></p>
+    <textarea data-bind='value: ko.toJSON(citation)' rows='5' cols='60'> </textarea>
+
+</div>
+
+{% endblock %}

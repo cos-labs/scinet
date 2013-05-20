@@ -15,8 +15,9 @@
                 <h1 class="logo">Crowd Scholar Menu</h1>
                 <nav>
                     <ul class="menu">
-                        <li><a href="/index">Home</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <!-- <li><a href="/index">Home</a></li>
+                        <li><a href="/login">Login</a></li> -->
+                        <li><a href="/dropbox">Drop Box</a></li>
                     </ul>
                 </nav>
             </div>
@@ -35,6 +36,8 @@
         {% endwith %}
         {% block content %}{% endblock %}
         </div>
-        
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>       
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+        <script src="{{ url_for('static', filename='js/dropbox.js') }}"></script>
     </body>
 </html>
