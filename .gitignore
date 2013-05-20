@@ -2,3 +2,4 @@
 *.swp
 *.lock
 *.db
+app/depricated/*
