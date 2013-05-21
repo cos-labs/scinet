@@ -13,8 +13,15 @@ function Citation(authors, title, container_title, date, raw_data, references) {
 function CitationModel(authors) {
     // data
     var self = this;
+
+    // local
     self.given = ko.observable("");
     self.family = ko.observable("");
+    self.isManualEntry = ko.observable(false);
+    self.isRawEntry = ko.observable(false);
+    self.isReferenceEntry = ko.observable(false);
+
+    // citation
     self.citation = new Citation(null, "", "","","","");
     self.citation.title = ko.observable("");
     self.citation.container_title = ko.observable("");
@@ -27,6 +34,28 @@ function CitationModel(authors) {
     self.lastSavedJson = ko.observable("");
 
     // operators
+
+    // toggle manual entry forms visible or invisible
+    self.toggleManualEntry = function() {
+        self.isManualEntry(!self.isManualEntry())
+    };
+
+    // toggle raw paste form visible or invisible
+    self.toggleRawEntry = function() {
+        self.isRawEntry(!self.isRawEntry())
+    };
+
+    // toggle reference form visible or invisible
+    self.toggleReferenceEntry = function() {
+        self.isReferenceEntry(!self.isReferenceEntry())
+    };
+
+    // returns true if submission is true
+    self.isValidSubmission = function() {
+        if (self.citation.title != "" ) {
+            return true;
+        }
+    };
 
     // add author to authors
     self.addAuthor = function() {
