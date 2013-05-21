@@ -59,6 +59,15 @@ h3 {
   color: #999;
 }
 
+h4 {
+    font-size: 1.0em;
+    font-weight: 100;
+    margin-top: 20px;
+    text-align: center;
+    letter-spacing: -1;
+    color: #999;
+}
+
 /* Display navigation links inline */
 
 .menu {
