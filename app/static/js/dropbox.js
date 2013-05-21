@@ -37,17 +37,17 @@ function CitationModel(authors) {
 
     // toggle manual entry forms visible or invisible
     self.toggleManualEntry = function() {
-        self.isManualEntry(!self.isManualEntry())
+        self.isManualEntry(!self.isManualEntry());
     };
 
     // toggle raw paste form visible or invisible
     self.toggleRawEntry = function() {
-        self.isRawEntry(!self.isRawEntry())
+        self.isRawEntry(!self.isRawEntry());
     };
 
     // toggle reference form visible or invisible
     self.toggleReferenceEntry = function() {
-        self.isReferenceEntry(!self.isReferenceEntry())
+        self.isReferenceEntry(!self.isReferenceEntry());
     };
 
     // returns true if submission is true

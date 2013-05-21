@@ -19,6 +19,6 @@ def dropbox():
         # convert post data to citation
         citation = json.loads(request.data)
         article_id = db.articles.insert(citation)
-        return str(article_id)
+        return ""
 
     return render_template("dropbox.html")
