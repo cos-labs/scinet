@@ -23,7 +23,7 @@
 
     <!-- FILL raw data -->
     <div data-bind="visible: isRawEntry">
-        <p>Raw Data:</p>
+        <p>Raw Citation:</p>
         <textarea data-bind="value: citation.raw_data" rows='5' cols='60' placeholder="Paste the raw citation data here"></textarea>
     </div>
 
@@ -60,7 +60,7 @@
     </div>
 
     <!-- submit and view resulting JSON -->
-    <p><button data-bind="click: save, enable: citation.title() != ''">Submit citation</button></p>
+    <p><button data-bind="click: save, enable: citation.title() != '' || citation.raw_data() != ''">Submit citation</button></p>
     <!--
     <textarea data-bind='value: ko.toJSON(citation)' rows='5' cols='60'> </textarea>
     -->
