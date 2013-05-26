@@ -26,6 +26,10 @@ function CitationModel(authors) {
     self.citation.title = ko.observable("");
     self.citation.container_title = ko.observable("");
     self.citation.date = ko.observable("");
+    self.citation.volume = ko.observable("");
+    self.citation.page_first = ko.observable("");
+    self.citation.page_last = ko.observable("");
+    self.citation.PMID = ko.observable("");
     self.citation.DOI = ko.observable("");
     self.citation.raw_data = ko.observable("");
     self.citation.references = ko.observable("");
