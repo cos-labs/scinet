@@ -1,4 +1,4 @@
-// modelview for the citation dropbox
+// modelview for the citation citebin
 
 // class representing an author
 function Author(data) {
@@ -26,6 +26,7 @@ function CitationModel(authors) {
     self.citation.title = ko.observable("");
     self.citation.container_title = ko.observable("");
     self.citation.date = ko.observable("");
+    self.citation.DOI = ko.observable("");
     self.citation.raw_data = ko.observable("");
     self.citation.references = ko.observable("");
     self.citation.authors = ko.observableArray(ko.utils.arrayMap(authors, function(author) {
@@ -71,14 +72,14 @@ function CitationModel(authors) {
     // converts data to json
     self.save = function() {
         console.log(ko.toJSON(self.citation))
-        $.ajax("/dropbox", {
+        $.ajax("/citebin", {
             data: ko.toJSON(self.citation),
             type: "post", contentType: "application/json",
             // success function is a workaround for flask returning
             // redirect to the ajax call not the browser
             success: function(result) {
                 alert("Thank you for your submission! " + result);
-                window.location.href='dropbox';
+                window.location.href='citebin';
                 }
         });
     };
