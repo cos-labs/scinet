@@ -17,7 +17,7 @@
                     <ul class="menu">
                         <!-- <li><a href="/index">Home</a></li>
                         <li><a href="/login">Login</a></li> -->
-                        <li><a href="/dropbox">Cite Bin</a></li>
+                        <li><a href="/citebin">Cite Bin</a></li>
                     </ul>
                 </nav>
             </div>
@@ -36,8 +36,12 @@
         {% endwith %}
         {% block content %}{% endblock %}
         </div>
+        <!-- jQuery v 1.8.3 -->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>       
+        <!-- knockoutJS v 2.2.0-->
         <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js"></script>
+        <!-- knockout.Validation -->
+        <script src="https://raw.github.com/ericmbarnard/Knockout-Validation/master/Src/knockout.validation.js"></script>
         <script src="{{ url_for('static', filename='js/citebin.js') }}"></script>
     </body>
 </html>
