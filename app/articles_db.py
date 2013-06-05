@@ -23,6 +23,5 @@ class DB:
     def add(self, submission):
         """ adds submission to articles db """
         # add data
-        pass
         id = self.articles.insert(submission)
         return id

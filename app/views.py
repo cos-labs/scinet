@@ -15,8 +15,8 @@ from flask import render_template, flash, redirect, request, url_for, Response
 from app import app
 
 # connect to the database
-articles_db = articles_db.DB(host="localhost", port="27017")
-raw_db = raw_db.DB(host="localhost", port="27018")
+articles_db = articles_db.DB(host="localhost", port=27017)
+raw_db = raw_db.DB(host="localhost", port=27018)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -59,7 +59,10 @@ def ArticleEndpoint():
             return Response(status=405)
 
         # add meta-data to user submission -- headers and what not
-        user_submission = user_submission.append(request.headers)
+        # @todo user submission is a string at this point. Need to make it a string.
+        user_submission = json.loads(user_submission)
+        # @todo find proper way to append request.headers to the json
+        #user_submission['headers'] = request.headers
 
         # add parsed data to DB
         # @todo write database hook
@@ -67,8 +70,8 @@ def ArticleEndpoint():
         submission_id = articles_db.add(user_submission)
 
         # return URI of new resource to submitter
-        #@todo: format return body
-        return Response(status=201, data=submission_id)
+        #@todo: format return body with objectid?
+        return Response(status=201)
 
     else:
         # return HTTP submission error code to user
