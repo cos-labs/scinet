@@ -89,7 +89,7 @@ def RawEndpoint():
 
     elif request.method == 'POST':
         # grab data
-        user_submission = request.data
+        user_submission = json.loads(request.data)
 
         # clean or parse?
         # @todo write parser
@@ -102,7 +102,7 @@ def RawEndpoint():
 
         # return success message to submitter
         #@todo return any additional information?
-        return Response(status=201, data=submission_id)
+        return Response(status=201)
 
     else:
         # return HTTP submission error code to user

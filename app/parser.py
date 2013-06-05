@@ -11,7 +11,8 @@ def article_endpoint_parse(self, data):
     raise NotImplementedError
 
 # @todo implement
-def raw_endpoint_parse(self, data):
+def raw_endpoint_parse(data):
     """ parses data submitted to the api raw endpoint
     """
-    raise NotImplementedError
+    return data
+    #raise NotImplementedError

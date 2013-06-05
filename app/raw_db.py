@@ -22,6 +22,7 @@ class DB:
     #@ todo implement
     def add(self, submission):
         """ adds submission to articles db """
-        pass
+        # add data
         id = self.raw.insert(submission)
+        print str(id) + " added to crowdscholar_raw_db"
         return id

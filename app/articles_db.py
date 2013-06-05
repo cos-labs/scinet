@@ -24,4 +24,5 @@ class DB:
         """ adds submission to articles db """
         # add data
         id = self.articles.insert(submission)
+        print str(id) + " added to crowdscholar_articles_db"
         return id
