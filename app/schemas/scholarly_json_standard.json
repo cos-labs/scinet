@@ -1,0 +1,13 @@
+{
+    // unique id -- grab this from MongoDB _id field?
+    "id": "...",
+    // standards CSL format of the primary article
+    "citation": {},
+    // standard CSL format of any referenced articles
+    "references": [{}],
+    // local meta-data for archival purposes
+    "meta-data": {
+        "headers": [],
+        "source" : "...",
+    }
+}
