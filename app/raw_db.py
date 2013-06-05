@@ -15,11 +15,13 @@ class DB:
         client = MongoClient(host, port)
         self.db = client.crowdscholar_raw_db
         self.users = self.db.users
-        self.articles = self.db.raw
+        self.raw = self.db.raw
 
     # need to add an add/validate method
 
     #@ todo implement
     def add(self, submission):
         """ adds submission to articles db """
-        raise NotImplementedError
+        pass
+        id = self.raw.insert(submission)
+        return id

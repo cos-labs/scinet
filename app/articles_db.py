@@ -22,4 +22,7 @@ class DB:
     #@ todo implement
     def add(self, submission):
         """ adds submission to articles db """
-        raise NotImplementedError
+        # add data
+        pass
+        id = self.articles.insert(submission)
+        return id

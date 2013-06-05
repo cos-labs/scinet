@@ -9,12 +9,13 @@ import json
 import raw_db
 import articles_db
 import parser
+import validator
 
 from flask import render_template, flash, redirect, request, url_for, Response
 from app import app
 
 # connect to the database
-articles_db = articles_db.DB(host="localhost", port="20717")
+articles_db = articles_db.DB(host="localhost", port="27017")
 raw_db = raw_db.DB(host="localhost", port="27018")
 
 @app.route('/', methods=['GET', 'POST'])
@@ -52,23 +53,22 @@ def ArticleEndpoint():
         user_submission = request.data
 
         # validate data
-        if not parser.articles_endpoint_validate(user_submission):
+        if not validator.articles_endpoint_validate(user_submission):
             # return error
             # @todo return specific information about failure not validating?
             return Response(status=405)
 
-        # parse data
-        # @todo write parser
-        cleaned_data = parser.article_endpoint_parse(user_submission)
+        # add meta-data to user submission -- headers and what not
+        user_submission = user_submission.append(request.headers)
 
         # add parsed data to DB
         # @todo write database hook
         # @todo create separate db instance for articles
-        articles_db.add(cleaned_data)
+        submission_id = articles_db.add(user_submission)
 
         # return URI of new resource to submitter
-        #@todo: return resource URI as well
-        return Response(status=201)
+        #@todo: format return body
+        return Response(status=201, data=submission_id)
 
     else:
         # return HTTP submission error code to user
@@ -95,11 +95,11 @@ def RawEndpoint():
         # add cleaned or parsed data to DB
         # @todo write database hook
         # @todo create separate db instance for raw
-        raw_db.add(cleaned_data)
+        submission_id = raw_db.add(cleaned_data)
 
-        # return success messageto submitter
+        # return success message to submitter
         #@todo return any additional information?
-        return Response(status=201)
+        return Response(status=201, data=submission_id)
 
     else:
         # return HTTP submission error code to user
