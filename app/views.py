@@ -62,7 +62,10 @@ def ArticleEndpoint():
         # @todo user submission is a string at this point. Need to make it a string.
         user_submission = json.loads(user_submission)
         # @todo find proper way to append request.headers to the json
-        #user_submission['headers'] = request.headers
+        # user_submission['headers'] = request.headers
+        print "####################"
+        print type(request.headers)
+        print request.headers.__dict__
 
         # add parsed data to DB
         # @todo write database hook
