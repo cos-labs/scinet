@@ -1,0 +1,50 @@
+{
+	"primary_citation": { 
+		"id": "item1",
+		"title": "Some article about domokuns.",
+		"author": [
+			{"given": "tim",
+			"family": "tom" } 
+		],
+		"type": "book"
+	},
+
+	"linked_citations": [
+		{
+			"id": "item2",
+			"title": "Some older article about some domokuns.",
+			"author": [
+				{"given": "chevy",
+				"family": "chaser" } 
+			],
+			"type": "book"
+		},
+		{ 
+			"id": "item3",
+			"title": "Some article about some domokun lovers.",
+			"author": [
+				{"given": "kim",
+				"family": "possibly" } 
+			],
+			"type": "book",
+			"doi": "asdflkj209asdlkfj209sadfkj2"
+		},
+		{ 
+			"id": "item4",
+			"title": "Some article about some people who made their fortunes from selling domokuns.",
+			"author": [
+				{"given": "lyla",
+				"family": "lilly" },
+				{"given": "jimmy",
+				"family": "jaseper"} 
+			],
+			"type": "webpage",
+			"url": "http://www.pewpew.com/domokun_seller_gets_rich"
+		}
+	],
+
+	"provenance": {
+		"source": "some submitter",
+		"parse_style": "manual / parscite / scraping"
+	}	 
+}
