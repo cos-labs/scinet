@@ -8,7 +8,7 @@ import sys
 import unittest
 
 sys.path.append('/home/sphere/git/crowd-scholar/app')
-import validator
+import articles_endpoint_validator
 
 
 class ArticlesValidatorTests(unittest.TestCase):
@@ -29,7 +29,7 @@ class ArticlesValidatorTests(unittest.TestCase):
         }
 
         # call articles endpoint validation on payload
-        self.assertFalse(validator.articles_endpoint_validate(payload))
+        self.assertFalse(articles_endpoint_validator.validate(payload))
 
     def test_reference_missing_csl_field_expected_fail(self):
         """tests articles endpoint validation with citation missing required
@@ -59,7 +59,7 @@ class ArticlesValidatorTests(unittest.TestCase):
         }
 
         # call articles endpoint validation on payload
-        self.assertFalse(validator.articles_endpoint_validate(payload))
+        self.assertFalse(articles_endpoint_validator.validate(payload))
 
     def test_payload_missing_scholarly_field_expected_fail(self):
         """tests articles endpoint validation missing a Scholary required
@@ -90,7 +90,7 @@ class ArticlesValidatorTests(unittest.TestCase):
         }
 
         # call articles endpoint validation on payload
-        self.assertFalse(validator.articles_endpoint_validate(payload))
+        self.assertFalse(articles_endpoint_validator.validate(payload))
 
     def test_payload_without_references_expected_pass(self):
         """tests articles endpoint validation on known good payload without
@@ -109,7 +109,7 @@ class ArticlesValidatorTests(unittest.TestCase):
         }
 
         # call articles endpoint validation on payload
-        self.assertTrue(validator.articles_endpoint_validate(payload))
+        self.assertTrue(articles_endpoint_validator.validate(payload))
 
     def test_payload_with_references_expected_pass(self):
         """tests articles endpoint validation on known good payload with
@@ -167,4 +167,4 @@ class ArticlesValidatorTests(unittest.TestCase):
         }
 
         # call articles endpoint validation on payload
-        self.assertTrue(validator.articles_endpoint_validate(payload))
+        self.assertTrue(articles_endpoint_validator.validate(payload))

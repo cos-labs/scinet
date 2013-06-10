@@ -9,7 +9,7 @@ import json
 import raw_db
 import articles_db
 import parser
-import validator
+import articles_endpoint_validator
 
 from flask import render_template, request, Response
 from app import app
@@ -64,7 +64,7 @@ def ArticleEndpoint():
                 return Response(status=405)
 
             # validate data
-            if not validator.articles_endpoint_validate(user_submission):
+            if not articles_endpoint_validator.validate(user_submission):
                 # return error
                 # @todo return specific information about failure not validating?
                 return Response(status=405)

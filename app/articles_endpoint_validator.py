@@ -6,7 +6,7 @@ Date: 5June13
 
 
 # @todo implement
-def articles_endpoint_validate(submission):
+def validate(submission):
     """ validates data submitted to api article endpoint matches Scholarly
     JSON standards
     """
