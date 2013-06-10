@@ -4,17 +4,40 @@ Author: Harry Rybacki
 Date: 5June13
 """
 
+
 # @todo implement
-def articles_endpoint_validate(data):
+def articles_endpoint_validate(submission):
     """ validates data submitted to api article endpoint matches Scholarly
-    JSON standars
+    JSON standards
     """
-    # grab data
-    unvalidated_data = data
+    # Scholarly JSON standard
+    required_scholarly_fields = [unicode('citation')]
+    optional_scholarly_fields = [unicode('references'), unicode('metadata')]
+    # CSL standard required fields
+    required_csl_fields = [unicode('author'), unicode('type'), unicode('title')]
 
-    # if data is valid, return True
+    # check required scholarly fields are in payload
+    for requirement in required_scholarly_fields:
+        if requirement not in submission:
+            return False
 
-    # else return False
-    # @todo remove as this is for testing
+    # check CSL standard fields in citation
+    for requirement in required_csl_fields:
+        if requirement not in submission['citation']:
+            return False
+
+    # check CSL standard fields in each reference
+    if 'references' in submission:
+        for reference in submission['references']:
+            for requirement in required_csl_fields:
+                if requirement not in reference:
+                    return False
+
+    # check for additional non-standard fields
+    for field in submission:
+        if field not in required_scholarly_fields and field not in optional_scholarly_fields:
+            return False
+
+    # validation tests compete; return True
     return True
-    raise NotImplementedError
+
