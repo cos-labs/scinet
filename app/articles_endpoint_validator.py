@@ -1,11 +1,10 @@
 """
-Controller for handling api submission data validation requests
+Controller for handling articles endpoint api submission data validation requests
 Author: Harry Rybacki
 Date: 5June13
 """
 
 
-# @todo implement
 def validate(submission):
     """ validates data submitted to api article endpoint matches Scholarly
     JSON standards
@@ -40,4 +39,3 @@ def validate(submission):
 
     # validation tests compete; return True
     return True
-

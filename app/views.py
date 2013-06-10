@@ -46,19 +46,17 @@ def ArticleEndpoint():
     RESTFull API endpoint for retrieving / submitting articles
     @TODO: Switch function to pluggable view approach
     """
+
     if request.method == 'GET':
         # load articles endpoint informational page
         return render_template("articles.html")
 
     elif request.method == 'POST':
-
         if request.headers['content-type'] == 'application/json':
             # if post's content-type is JSON
-
             try:
                 # try to convert post data
                 user_submission = json.loads(request.data)
-                print type(user_submission)
             except:
                 # return error if fail
                 return Response(status=405)

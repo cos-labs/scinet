@@ -1,5 +1,5 @@
 """
-Tests validator methods
+Tests articles endpoint validator methods
 Author: Harry Rybacki
 Date: 10June13
 """

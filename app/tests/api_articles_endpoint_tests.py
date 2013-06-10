@@ -34,14 +34,17 @@ class APIArticlesEndpointTests(unittest.TestCase):
          and headers expected to pass against response code: 201
         """
         # set basic JSON payload in scholarly standard format
-        payload = {"id": "item-1",
-                   "title": "Some article about some domokuns.",
-                   "author": [
-                            {"given": "tim",
-                             "family": "tom"
-                             }
-                   ],
-                   "type": "book"}
+        payload = {
+            "citation": {
+                "id": "item1",
+                "author": [
+                    {"given": "tim",
+                     "family": "tom"}
+                ],
+                "type": "book",
+                "title": "Pew pew noises."
+            }
+        }
 
         # set content-type for api
         headers = {'content-type': 'application/json'}
