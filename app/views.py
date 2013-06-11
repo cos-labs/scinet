@@ -30,14 +30,13 @@ def Citebin():
     if request.method == 'POST':
         # convert post data to citation
         citation = json.loads(request.data)
-        #@todo fix this to meet new db parse/insert procedures
+        # @todo fix this to meet new db parse/insert procedures
         #article_id = db.articles.insert(citation)
         return ""
 
     return render_template("citebin.html")
 
-"""
-begin API handlers
+"""begin API handlers
 """
 
 
@@ -114,16 +113,24 @@ def RawEndpoint():
                 return Response(status=405)
 
             # parse data
-            parsed_submission = parser.raw_endpoint_parse(user_submission)
+            #parsed_submission = parser.raw_endpoint_parse(user_submission)
 
             # insert submission into raw_db and return success/failure
             # @todo create separate db instance for raw
             # @todo find proper way to append request.headers to the json
-            if raw_db.add(parsed_submission):
-                return Response(status=201)
-            else:
-                return Response(status=405)
+            #if raw_db.add(parsed_submission):
+                #return Response(status=201)
+            #else:
+                #return Response(status=405)
+
+            return Response(status=201)
+
+        else:
+            # not json
+            print "not a json"
+            return Response(status=400)
 
     else:
         # return HTTP submission error code to user
+        print 'pew'
         return Response(status=405)

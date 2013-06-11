@@ -16,7 +16,7 @@ class APIRawEndpointTests(unittest.TestCase):
         self.url = "http://localhost:5000/raw"
 
     def test_get(self):
-        """tests get request for articles endpoint base url against expected
+        """tests get request for raw endpoint base url against expected
          response code: 200, and expected title.
         """
         # retrieve (get) request
@@ -45,9 +45,20 @@ class APIRawEndpointTests(unittest.TestCase):
     def test_post_expected_pass_citebin_json(self):
         raise NotImplementedError
 
-    @unittest.skip("Not yet implemented")
     def test_post_expected_pass_citelet_json(self):
-        raise NotImplementedError
+        """tests post request for raw endpoint base url against expected
+         response code: 201.
+        """
+        headers = {'content-type': 'application/json'}
+        with open('citelet_valid_sample_highwire.json') as test_data:
+            payload = json.load(test_data)
+
+            # retrieve (post) request
+            response = requests.post(self.url, data=json.dumps(payload),
+                                     headers=headers)
+
+            # assert post request returns a status code 201 (successly created)
+            self.assertEqual(response.status_code, 201)
 
     @unittest.skip("Not yet implemented")
     def test_post_expected_fail_files_pdf(self):
@@ -65,6 +76,18 @@ class APIRawEndpointTests(unittest.TestCase):
     def test_post_expected_fail_citebin_json(self):
         raise NotImplementedError
 
-    @unittest.skip("Not yet implemented")
+    #@unittest.skip("Not yet implemented")
     def test_post_expected_fail_citelet_json(self):
-        raise NotImplementedError
+        """tests post request for raw endpoint base url against expected
+         response code: 405.
+        """
+        headers = {'content-type': 'application/json'}
+        with open('citelet_invalid_sample_highwire.json') as test_data:
+            payload = json.load(test_data)
+
+            # retrieve (post) request
+            response = requests.post(self.url, data=json.dumps(payload),
+                                     headers=headers)
+
+            # assert post request returns a status code 405 (user submission error)
+            self.assertEqual(response.status_code, 405)
