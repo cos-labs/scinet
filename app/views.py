@@ -10,6 +10,7 @@ import raw_db
 import articles_db
 import parser
 import articles_endpoint_validator
+import raw_endpoint_validator
 
 from flask import render_template, request, Response
 from app import app
@@ -57,14 +58,12 @@ def ArticleEndpoint():
             try:
                 # try to convert post data
                 user_submission = json.loads(request.data)
-            except:
+            except ValueError:
                 # return error if fail
                 return Response(status=405)
 
-            # validate data
+            # validate data or return error
             if not articles_endpoint_validator.validate(user_submission):
-                # return error
-                # @todo return specific information about failure not validating?
                 return Response(status=405)
 
             # add meta-data to user submission -- headers and what not
@@ -73,8 +72,6 @@ def ArticleEndpoint():
             # user_submission['headers'] = request.headers
 
             # add parsed data to DB
-            # @todo write database hook
-            # @todo create separate db instance for articles
             #submission_id = articles_db.add(user_submission)
 
             # return URI of new resource to submitter
@@ -101,21 +98,31 @@ def RawEndpoint():
         return render_template("raw.html")
 
     elif request.method == 'POST':
-        # grab data
-        user_submission = json.loads(request.data)
+        if request.headers['content-type'] == 'application/json':
+        # if post's content-type is JSON
+            try:
+                # try to convert post data
+                user_submission = json.loads(request.data)
+            except ValueError:
+                # return error if fail
+                return Response(status=405)
 
-        # clean or parse?
-        # @todo write parser
-        cleaned_data = parser.raw_endpoint_parse(user_submission)
+            # validate data
+            if not raw_endpoint_validator.validate(user_submission):
+                # return error
+                # @todo return specific information about failure not validating?
+                return Response(status=405)
 
-        # add cleaned or parsed data to DB
-        # @todo write database hook
-        # @todo create separate db instance for raw
-        submission_id = raw_db.add(cleaned_data)
+            # parse data
+            parsed_submission = parser.raw_endpoint_parse(user_submission)
 
-        # return success message to submitter
-        #@todo return any additional information?
-        return Response(status=201)
+            # insert submission into raw_db and return success/failure
+            # @todo create separate db instance for raw
+            # @todo find proper way to append request.headers to the json
+            if raw_db.add(parsed_submission):
+                return Response(status=201)
+            else:
+                return Response(status=405)
 
     else:
         # return HTTP submission error code to user
