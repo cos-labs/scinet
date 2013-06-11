@@ -1,6 +1,6 @@
 ## Crowd Scholar -- Tools for building a dataset of scholarly article citations
 
-We're presenting at SciPy this year!
+We're presenting at **SciPy** this year!
 
 ### Current Projects:
 
