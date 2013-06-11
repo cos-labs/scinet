@@ -17,8 +17,8 @@ def validate(submission):
     # frontiers validation
     if publisher == 'frontiers':
         # @todo: add more required fields.
-        required_head_ref_fields = [unicode('publisher'), unicode('author'),
-                                    unicode('title')]
+        required_head_ref_fields = [unicode('journal_title'), unicode('author'),
+                                    unicode('title'), unicode('publication_date')]
 
         # check required head_ref fields are present
         for field in required_head_ref_fields:
@@ -38,7 +38,8 @@ def validate(submission):
     # highwire validation
     elif publisher == 'highwire':
         # @todo: add more required fields
-        required_head_ref_fields = [unicode('Title'), unicode('author')]
+        required_head_ref_fields = [unicode('journal_title'), unicode('author'),
+                                    unicode('Title'), unicode('Date')]
 
         # check required head_ref fields are present
         for field in required_head_ref_fields:

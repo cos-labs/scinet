@@ -104,7 +104,9 @@ class ArticlesValidatorTests(unittest.TestCase):
                     {"given": "tim",
                      "family": "tom"}
                 ],
-                "type": "book"
+                "type": "book",
+                "date": 2009,
+                "container-title": "Domokuns"
             }
         }
 
@@ -123,7 +125,9 @@ class ArticlesValidatorTests(unittest.TestCase):
                     {"given": "tim",
                      "family": "tom"}
                 ],
-                "type": "book"
+                "type": "book",
+                "date": 2009,
+                "container-title": "Domokuns"
             },
 
             "references": [
@@ -134,7 +138,9 @@ class ArticlesValidatorTests(unittest.TestCase):
                         {"given": "chevy",
                          "family": "chaser"}
                     ],
-                    "type": "book"
+                    "type": "book",
+                    "date": 2009,
+                    "container-title": "Domokuns"
                 },
                 {
                     "id": "item3",
@@ -144,6 +150,8 @@ class ArticlesValidatorTests(unittest.TestCase):
                          "family": "possibly"}
                     ],
                     "type": "book",
+                    "date": 2009,
+                    "container-title": "Domokuns",
                     "doi":  "asdflkj209asdlkfj209sadfkj2"
                 },
                 {
@@ -156,6 +164,8 @@ class ArticlesValidatorTests(unittest.TestCase):
                          "family": "jaseper"}
                     ],
                     "type": "webpage",
+                    "date": 2009,
+                    "container-title": "Domokuns",
                     "url":  "http://www.pewpew.com/domokun_seller_gets_rich"
                 }
             ],

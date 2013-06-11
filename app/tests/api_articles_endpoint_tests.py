@@ -42,7 +42,9 @@ class APIArticlesEndpointTests(unittest.TestCase):
                      "family": "tom"}
                 ],
                 "type": "book",
-                "title": "Pew pew noises."
+                "title": "Pew pew noises.",
+                "date": 2009,
+                "container-title": "Domokuns"
             }
         }
 

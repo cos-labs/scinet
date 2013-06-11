@@ -13,7 +13,8 @@ def validate(submission):
     required_scholarly_fields = [unicode('citation')]
     optional_scholarly_fields = [unicode('references'), unicode('metadata')]
     # CSL standard required fields
-    required_csl_fields = [unicode('author'), unicode('type'), unicode('title')]
+    required_csl_fields = [unicode('author'), unicode('date'),
+                           unicode('title'), unicode('container-title')]
 
     # check required scholarly fields are in payload
     for requirement in required_scholarly_fields:
