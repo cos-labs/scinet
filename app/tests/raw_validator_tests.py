@@ -43,19 +43,23 @@ class RawValidatorTests(unittest.TestCase):
         #    payload = json.load(test_data)
         #    self.assertTrue(raw_endpoint_validator.validate(payload))
 
-    @unittest.skip('Not yet implemented')
     def test_citelet_frontiers_expected_fail(self):
         """tests raw endpoint validation on known bad frontiers payload
+         Missing 'author' field
          Expect to pass with return value of False
         """
-        raise NotImplementedError
+        with open('citelet_invalid_sample_frontiers.json') as test_data:
+            payload = json.load(test_data)
+            self.assertFalse(raw_endpoint_validator.validate(test_data))
 
-    @unittest.skip('Not yet implemented')
     def test_citelet_highwire_expected_fail(self):
         """tests raw endpoint validation on known bad highwire payload
+         Missing 'date' field
          Expect to pass with return value of False
         """
-        raise NotImplementedError
+        with open('citelet_invalid_sample_highwire.json') as test_data:
+            payload = json.load(test_data)
+            self.assertFalse(raw_endpoint_validator.validate(test_data))
 
     @unittest.skip('Not yet implemented')
     def test_citelet_PLOS_expected_fail(self):
