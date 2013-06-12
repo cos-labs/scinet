@@ -5,7 +5,7 @@ Author: Harry Rybacki
 Date: 11June13
 """
 # @todo: do we want this to create and hand a custom Response back to the API?
-# @todo: consoldate this into a class method?
+# @todo: consolidate this into a class method?
 
 import validation_controller
 import parsing_controller
@@ -25,8 +25,18 @@ class JSONController:
                 201: created successfully
                 405: user submission error
     """
-    def __init__(self, submission):
-        self.submission = submission
+    def __init__(self, submission=None, db=None):
+        # grab the submission
+        if submission is not None:
+            self.submission = submission
+        else:
+            raise TypeError('No submission given.')
+        # setup the database
+        if db is not None:
+            self.db = db
+        else:
+            raise TypeError('No database instance given.')
+        # determine publisher type
         self.publisher = self.detect_publisher()
 
     def submit(self):
@@ -43,11 +53,17 @@ class JSONController:
         if self.validate():
             # parse the submission
             parsed_submission = self.parse()
+
             # and insert it into the database
-            # submission_id = self.insert(parsed_submission)
-            # return a successfully created Response object
-            print 'submit() successful'
-            return Response(status=201)
+            submission_id = self.insert(parsed_submission)
+            # if successful return successful response
+            if submission_id is not None:
+                print 'submit() successful '
+                return Response(status=201)
+            # otherwise return server error response
+            else:
+                print 'submit() not successful'
+                return Response(status=500)
 
         # else return a user submission error
         # @todo: stubbed
@@ -81,7 +97,7 @@ class JSONController:
 
         result = getattr(foo, 'bar')()
         """
-        return validation_controller.test_validation(self.submission, publisher=self.publisher)
+        return validation_controller.validate(self.submission, publisher=self.publisher)
 
     def parse(self):
         """calls parsing_controller on a user submission
@@ -91,7 +107,7 @@ class JSONController:
 
         """
         # @todo: stubbed
-        return parsing_controller.parse(self.submission)
+        return parsing_controller.parse(self.submission, publisher=self.publisher)
 
     def insert(self, parsed_submission):
         """calls raw_db_controller to insert parsed submission into raw db
@@ -99,6 +115,5 @@ class JSONController:
          @returns:  ObjectID - if insertion was successful
                     None - if insertion was unsuccessful
         """
-        # @todo: stubbed
-        return 12345
-
+        submission_id = self.db.add(parsed_submission)
+        return submission_id

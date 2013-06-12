@@ -17,12 +17,8 @@ class DB:
         self.users = self.db.users
         self.raw = self.db.raw
 
-    # need to add an add/validate method
-
-    #@ todo implement
     def add(self, submission):
         """ adds submission to articles db """
         # add data
         id = self.raw.insert(submission)
-        print str(id) + " added to crowdscholar_raw_db"
         return id

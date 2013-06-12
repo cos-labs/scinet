@@ -56,7 +56,7 @@ def ArticleEndpoint():
             try:
                 # try to convert post data
                 user_submission = json.loads(request.data)
-            except ValueError:
+            except ValunteError:
                 # return error if fail
                 return Response(status=405)
 
@@ -106,7 +106,7 @@ def RawEndpoint():
                 return Response(status=405)
 
             # hand user submission ot the controller and return Response
-            controller_response = JSONController(user_submission).submit()
+            controller_response = JSONController(user_submission, db=raw_db).submit()
             print "All done, status code: " + str(controller_response.status_code)
             return controller_response
 
