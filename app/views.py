@@ -8,12 +8,11 @@ import json
 
 import raw_db
 import articles_db
-import parser
 import articles_endpoint_validator
-import raw_endpoint_validator
 
 from flask import render_template, request, Response
 from app import app
+from json_controller import JSONController
 
 # connect to the database
 articles_db = articles_db.DB(host="localhost", port=27017)
@@ -100,37 +99,22 @@ def RawEndpoint():
         if request.headers['content-type'] == 'application/json':
         # if post's content-type is JSON
             try:
-                # try to convert post data
+                # ensure it is a valid JSON
                 user_submission = json.loads(request.data)
             except ValueError:
-                # return error if fail
+                # return error if not a valid JSON
                 return Response(status=405)
 
-            # validate data
-            if not raw_endpoint_validator.validate(user_submission):
-                # return error
-                # @todo return specific information about failure not validating?
-                return Response(status=405)
+            # hand user submission ot the controller and return Response
+            controller_response = JSONController(user_submission).submit()
+            print "All done, status code: " + str(controller_response.status_code)
+            return controller_response
 
-            # parse data
-            #parsed_submission = parser.raw_endpoint_parse(user_submission)
-
-            # insert submission into raw_db and return success/failure
-            # @todo create separate db instance for raw
-            # @todo find proper way to append request.headers to the json
-            #if raw_db.add(parsed_submission):
-                #return Response(status=201)
-            #else:
-                #return Response(status=405)
-
-            return Response(status=201)
-
+        # user submitted a content-type no currently supported
         else:
-            # not json
             print "not a json"
             return Response(status=400)
 
+    # user tried to call an unsupported HTTP method
     else:
-        # return HTTP submission error code to user
-        print 'pew'
         return Response(status=405)

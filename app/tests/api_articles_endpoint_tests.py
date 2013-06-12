@@ -41,10 +41,9 @@ class APIArticlesEndpointTests(unittest.TestCase):
                     {"given": "tim",
                      "family": "tom"}
                 ],
-                "type": "book",
+                "container-title": "book",
                 "title": "Pew pew noises.",
-                "date": 2009,
-                "container-title": "Domokuns"
+                "date": 2009
             }
         }
 

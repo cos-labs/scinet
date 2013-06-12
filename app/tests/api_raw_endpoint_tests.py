@@ -91,3 +91,6 @@ class APIRawEndpointTests(unittest.TestCase):
 
             # assert post request returns a status code 405 (user submission error)
             self.assertEqual(response.status_code, 405)
+
+if __name__ == '__main__':
+    unittest.main()
