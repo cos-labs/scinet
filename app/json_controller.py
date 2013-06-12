@@ -25,6 +25,7 @@ class JSONController:
                 201: created successfully
                 405: user submission error
     """
+    # @todo: remove defaults, add to docs in views and switch to try/excepts
     def __init__(self, submission=None, db=None):
         # grab the submission
         if submission is not None:
