@@ -1,0 +1,43 @@
+{
+    "comment" : "Deleted fourth author",
+    "publisher": "Public Library of Science", 
+    "type": "article-journal", 
+    "title": "Age-Related Neural Dedifferentiation in the Motor System", 
+    "issued": {
+        "date-parts": [
+            [
+                2011, 
+                12, 
+                22
+            ]
+        ]
+    }, 
+    "author": [
+        {
+            "given": "Joshua", 
+            "family": "Carp"
+        }, 
+        {
+            "given": "Joonkoo", 
+            "family": "Park"
+        }, 
+        {
+            "given": "Andrew", 
+            "family": "Hebrank"
+        }, 
+        {
+            "given": "Thad A.", 
+            "family": "Polk"
+        }
+    ], 
+    "volume": "6", 
+    "editor": [
+        {
+            "given": "Nicole", 
+            "family": "Wenderoth"
+        }
+    ], 
+    "container-title": "PLoS ONE", 
+    "issue": "12", 
+    "page": "e29411"
+}
