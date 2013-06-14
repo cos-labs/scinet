@@ -1,0 +1,23 @@
+{   
+    "comment" : "Altered title",
+    "publisher": "Frontiers Media SA", 
+    "title": "On Plurality of (Methodological) Worlds: Estimating the Analytic Flexibility of fMRI Experiment", 
+    "URL": "http://dx.doi.org/10.3389/fnins.2012.00149", 
+    "issued": {
+        "date-parts": [
+            [
+                2012
+            ]
+        ]
+    }, 
+    "author": [
+        {
+            "given": "Joshua", 
+            "family": "Carp"
+        }
+    ], 
+    "volume": "6", 
+    "editor": [], 
+    "container-title": "Frontiers in Neuroscience", 
+    "type": "article-journal"
+}
