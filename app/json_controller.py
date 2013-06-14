@@ -12,16 +12,21 @@ import parsing_controller
 
 from flask import Response
 
+# Import class registries
+from gather_htmlparse import HTMLParse
+from gather_metaparse import MetaParse
+from gather_validate import Validate
 
-class JSONController:
+
+class JSONController(object):
     """Determines publisher type of user submission and sends it to the
      validator and parser controllers. If the submission is successfully
      validated and parsed, it is handed off to the DB Controller for insertion.
 
-     @params:    submission = requests.request object representing user
+     @params:    submission = JSON-formatted object representing user
                 submission
 
-     @returns:   requests.Response object with appropriate status code
+     @returns:   flask.Response object with appropriate status code
                 201: created successfully
                 405: user submission error
     """
@@ -51,26 +56,26 @@ class JSONController:
                         was unsuccessful
         """
         # if user submission is valid
-        if self.validate():
-            # parse the submission
-            parsed_submission = self.parse()
-
-            # and insert it into the database
-            submission_id = self.insert(parsed_submission)
-            # if successful return successful response
-            if submission_id is not None:
-                print 'submit() successful '
-                return Response(status=201)
-            # otherwise return server error response
-            else:
-                print 'submit() not successful'
-                return Response(status=500)
-
-        # else return a user submission error
-        # @todo: stubbed
-        else:
+        try:
+            self.validate()
+        except:
             print 'submit() failed'
             return Response(status=405)
+
+        # parse the submission
+        parsed_submission = self.parse()
+
+        # and insert it into the database
+        submission_id = self.insert(parsed_submission)
+        # if successful return successful response
+        if submission_id is not None:
+            print 'submit() successful '
+            return Response(status=201)
+        # otherwise return server error response
+        else:
+            print 'submit() not successful'
+            return Response(status=500)
+
 
     def detect_publisher(self):
         """detects the publisher type of a user submission
@@ -98,7 +103,15 @@ class JSONController:
 
         result = getattr(foo, 'bar')()
         """
-        return validation_controller.validate(self.submission, publisher=self.publisher)
+
+        # Look up validatation class
+        validate_klass = Validate.get(self.publisher)
+
+        # Instantiate validation class
+        validate_instance = validate_klass(self.submission)
+
+        # Validate
+        validate_instance.validate()
 
     def parse(self):
         """calls parsing_controller on a user submission
@@ -108,7 +121,35 @@ class JSONController:
 
         """
         # @todo: stubbed
-        return parsing_controller.parse(self.submission, publisher=self.publisher)
+
+        # Look up classes
+        meta_parse_klass = MetaParse.get(self.publisher)
+        html_parse_klass = HTMLParse.get(self.publisher)
+        
+        # Instantiate meta parse class
+        meta_parse_instance = meta_parse_klass(self.submission['head_ref'])
+
+        # Parse citation
+        citation = meta_parse_instance.parse()
+        
+        # Initialize references
+        references = []
+        
+        # Parse references
+        for cited_ref in self.submission['cited_refs']:
+
+            html_parse_instance = html_parse_klass(cited_ref)
+            reference = html_parse_instance.parse()
+            references.append(reference)
+        
+        # Build result
+        result = {}
+        result['citation'] = citation
+        result['references'] = references
+        result['meta-data'] = self.submission['meta']
+        #@TODO: Expand meta-data
+
+        return result
 
     def insert(self, parsed_submission):
         """calls raw_db_controller to insert parsed submission into raw db
