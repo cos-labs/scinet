@@ -24,15 +24,18 @@ human_to_csl_map = {
     },
 }
 
-def human_to_csl(human_name):
-    """Convert nameparser.HumanName to CSL-formatted JSON.
+def human_to_csl(name):
+    """Convert HumanName to CSL-formatted JSON.
 
     Args:
-        human_name : nameparser.HumanName
+        name : HumanName or str / unicode
     Returns:
         CSL-formatted JSON
 
     Examples:
+    >>> csl = human_to_csl(Rafael Nadal')
+    >>> csl == {'given' : 'Rafael', 'family' : 'Nadal'}
+    True
     >>> csl = human_to_csl(HumanName('Rafael Nadal'))
     >>> csl == {'given' : 'Rafael', 'family' : 'Nadal'}
     True
@@ -40,12 +43,16 @@ def human_to_csl(human_name):
     >>> csl == {'given' : 'George H. W.', 'family' : 'de Bush'}
     True
     """
+    # Optionally convert to nameparser.HumanName
+    if not isinstance(name, HumanName):
+        name = HumanName(name)
+
     # Initialize CSL data
     csl_data = {}
     
     # Append middle name to first
-    if human_name.middle:
-        human_name.first += ' ' + human_name.middle
+    if name.middle:
+        name.first += ' ' + name.middle
 
     # Iterate over lookup fields
     for lookup in human_to_csl_map:
@@ -55,7 +62,7 @@ def human_to_csl(human_name):
         fun = human_to_csl_map[lookup].get('fun', I)
         
         # Get field from name
-        value = getattr(human_name, field)
+        value = getattr(name, field)
 
         # Skip if empty
         if not value:
@@ -69,10 +76,6 @@ def human_to_csl(human_name):
 
     # Return CSL data
     return csl_data
-
-def clean_name(name):
-    
-    pass
 
 if __name__ == '__main__':
     import doctest
