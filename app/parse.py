@@ -12,8 +12,11 @@ class Parse(object):
     def parse(self):
         """
         """       
+        # Initialize data
+        data = {}
+
         # Extract data from lookup fields
-        data = self.parse_lookup_fields()
+        data.update(self.parse_lookup_fields())
         
         # Extract data from custom methods
         data.update(self.parse_method_fields())
@@ -38,16 +41,36 @@ class Parse(object):
 
         # Iterate over field methods
         for method in methods:
-            field = method[0]\
-                .replace('_parse_', '')\
-                .replace('_', '-')
+
+            # Call method
             value = method[1]()
-            if value:
-                data[field] = value
+
+            # Update data if result is dict
+            if isinstance(value, dict):
+                data.update(
+                    {k:value[k] for k in value if value[k]}
+                )
+            # Else store value in data
+            else:
+                # Get method name
+                field = method[0]\
+                    .replace('_parse_', '')\
+                    .replace('_', '-')
+                # Store value if truthy
+                if value:
+                    data[field] = value
 
         # Return extracted fields
         return data
 
     def parse_lookup_fields(self):
-        """ Returns {}; should be overridden by subclasses. """
-        return {}
+        """ 
+        """
+        # Quit if no lookups or no fetch
+        if not hasattr(self, 'lookups') or \
+                not hasattr(self, 'fetch'):
+            return {}
+        
+        # Fetch info from data
+        return self.fetch(self.data)\
+            .fetch(self.lookups)
