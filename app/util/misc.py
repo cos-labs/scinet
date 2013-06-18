@@ -13,8 +13,6 @@ def mkdir_p(path):
         else: raise
 
 
-#
-
 def translate(string, translator):
     
     return reduce(
