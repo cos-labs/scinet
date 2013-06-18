@@ -13,8 +13,8 @@ import parsing_controller
 from flask import Response
 
 # Import class registries
-from gather_htmlparse import HTMLParse
-from gather_metaparse import MetaParse
+from gather_citparse import CitParse
+from gather_refparse import RefParse
 from gather_validate import Validate
 
 
@@ -123,14 +123,14 @@ class JSONController(object):
         # @todo: stubbed
 
         # Look up classes
-        meta_parse_klass = MetaParse.get(self.publisher)
-        html_parse_klass = HTMLParse.get(self.publisher)
+        cit_parse_klass = CitParse.get(self.publisher)
+        ref_parse_klass = RefParse.get(self.publisher)
         
         # Instantiate meta parse class
-        meta_parse_instance = meta_parse_klass(self.submission['head_ref'])
+        cit_parse_instance = cit_parse_klass(self.submission['head_ref'])
 
         # Parse citation
-        citation = meta_parse_instance.parse()
+        citation = cit_parse_instance.parse()
         
         # Initialize references
         references = []
@@ -138,8 +138,8 @@ class JSONController(object):
         # Parse references
         for cited_ref in self.submission['cited_refs']:
 
-            html_parse_instance = html_parse_klass(cited_ref)
-            reference = html_parse_instance.parse()
+            ref_parse_instance = ref_parse_klass(cited_ref)
+            reference = ref_parse_instance.parse()
             references.append(reference)
         
         # Build result
