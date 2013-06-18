@@ -31,16 +31,34 @@ def dotify(name):
     'H. G. Wells'
     >>> dotify('H. G. Wells')
     'H. G. Wells'
+    >>> dotify('H.G. Wells')
+    'H. G. Wells'
+    >>> dotify('H..G. Wells')
+    'H. G. Wells'
 
     """
+    
+    # Copy name to dotified
+    dotified = name
+
+    # Remove multiple contiguous dots
+    dotified = re.sub('\.+', '.', dotified)
     
     # Add dots after initials
     dotified = re.sub(
         r'[A-Z](?=[\sA-Z]|$)', 
         r'\g<0>. ',
-        name
+        dotified
     )
-    
+
+    # Add space between dots and contiguous
+    # word characters: 'A.B.' -> 'A. B.'
+    dotified = re.sub(
+        r'[A-Z]\.(?=\w)',
+        r'\g<0> ',
+        dotified
+    )
+
     # Remove extra whitespace
     dotified = re.sub('\s+', ' ', dotified)
     dotified = dotified.strip()
