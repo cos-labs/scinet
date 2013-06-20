@@ -10,7 +10,7 @@ We're presenting at **SciPy** this year!
 
 1. [**Scholarly API**](https://github.com/hrybacki/crowd-scholar/wiki/API-SciPy-Projects) - A programmatic tool allowing users to send large amounts of citation data in either parsed or unparsed formats.
 
-1. [**Conflict Management Engine**](https://github.com/hrybacki/conflict-management-engine/wiki/Conflict-Mangement-Engine-SciPy-Projects) - A tool with which users can assist Scholary by resolving citation data conflicts via a simple, intuitive online user interface.
+1. [**Conflict Management Engine**](https://github.com/hrybacki/conflict-management-engine/wiki/Conflict-Management-Engine-SciPy-Projects) - A tool with which users can assist Scholary by resolving citation data conflicts via a simple, intuitive online user interface.
 
 ### Relevant Wiki Pages:
 
