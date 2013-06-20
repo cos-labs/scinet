@@ -7,8 +7,6 @@ Date: 11June13
 # @todo: do we want this to create and hand a custom Response back to the API?
 # @todo: consolidate this into a class method?
 
-import validation_controller
-import parsing_controller
 
 from flask import Response
 
