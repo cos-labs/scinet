@@ -1,5 +1,5 @@
 {
-	"primary_citation": { 
+	"citation": { 
 		"id": "item1",
 		"title": "Some article about domokuns.",
 		"author": [
@@ -9,7 +9,7 @@
 		"type": "book"
 	},
 
-	"linked_citations": [
+	"references": [
 		{
 			"id": "item2",
 			"title": "Some older article about some domokuns.",
@@ -43,7 +43,7 @@
 		}
 	],
 
-	"provenance": {
+	"metadata": {
 		"source": "some submitter",
 		"parse_style": "manual / parscite / scraping"
 	}	 
