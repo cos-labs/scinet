@@ -14,9 +14,10 @@ from flask import render_template, request, Response
 from app import app
 from json_controller import JSONController
 
-# connect to the database
-articles_db = articles_db.DB(host="localhost", port=27017)
-raw_db = raw_db.DB(host="localhost", port=27018)
+# Both DBs set to use the same server... need to check to make sure that's
+#  okay.
+articles_db = raw_db = articles_db.DB(host="localhost", port=27017)
+#raw_db = raw_db.DB(host="localhost", port=27018)
 
 
 @app.route('/', methods=['GET', 'POST'])
