@@ -2,6 +2,7 @@ Setting up CiteBin development/prototype server on AWS
 ------------------------------------------------------
 
 Created June 28, 2013  -- Rob Chambers
+
 Note that for a real MongoDB service, it's probably better to set up servers via the MongoDB AMI's
 provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial/deploy-mongodb-from-aws-marketplace/#deploy-mongodb-from-aws-marketplace>`_
 
@@ -70,9 +71,9 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 #) Install necessary packages:::
 	
 	sudo apt-get update
-	sudo apt-get install git python-flask python-pip build-essential python-dev python-requests \
-				 python-pyquery
-	sudo pip install pymongo reppy nameparser
+	sudo apt-get install git python-flask python-pip build-essential python-dev python-requests
+	sudo apt-get install python-pyquery uwsgi-plugin-python uwsgi nginx
+	sudo pip install pymongo reppy nameparser uwsgi
 	
 #) Get crowd-scholar.
 	- Checkout the repo:::
@@ -110,43 +111,66 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 		
 	  without errors.
 	  
-#) 
-	  
-	  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-- Copy your public key  (key_name.pem) to the server via ssh or scp.
-	- Append it to authorized keys:::
+#) Install and setup NGINX and uWSGI	  
+	- Configure NGINX, for example, replace ``/etc/nginx/sites-available/default``  with:::
 	
-		cat ~/key_name.pem >> .ssh/authorized_keys 
-
-	- Delete the .pem file
-	- Create a repo:::
+		server {
+	        listen   80;
 	
-		cd /vol
-		sudo mkdir proj.git
-		sudo chown ubuntu:ubuntu proj.git
-		cd proj.git
-		git init --bare
+	        # Make site accessible from http://localhost/
+	        server_name localhost;
+	
+	        location / { try_files $uri @app }
+	        location @app {
+	                include uwsgi_params;                                                                                                                           
+	                uwsgi_pass unix:/tmp/uwsgi.sock
+	                }                                                                                                                                               
+	        }
+
+	- Configure UWSGI, for example, replace ``/etc/uwsgi/apps-available/uwsgi.ini`` with:::
+	
+		[uwsgi]
+		chdir = /vol/crowd-scholar
+		uid = www-data
+		gid = www-data
+		chmod-socket = 666
+		socket = /tmp/uwsgi.sock
+		module = app
+		callable = app
+	
+	- Enable the app w/ a symlink and restart:::
+	
+		sudo ln -s /etc/uwsgi/apps-available/uwsgi.ini /etc/uwsgi/apps-enabled/
+		sudo service nginx restart
+		sudo service uwsgi restart
 		
-	- Create post-receive hooks::
+	- The site should now be up and running. You can, for instance, install lynx and visit
+	  ``http://localhost/`` via the terminal and see Citebin.	  
+#) Enable HTTP.
+	- Open AWS EC2 Web Console.
+	- Select the running instance under 'Instances'.
+		- Under 'Description', note the host address, such as ``ec2-67-202-56-148.compute-1.amazonaws.com``. 
+	  Note that you can assign an elastic IP to this host instead, and you can quite easily associate
+	  a domain name with the elastic IP; but for now, we'll use the AWS-provided domain name.
+	- Note the security group; for instance, "quicklaunch-1". 
+	- Click 'Security Groups' and then the appropriate group (e.g. quicklaunch-1).
+	- Click the ``Inbound`` tab.
+	- Create a new rule:
+		- Type: HTTP
+		- Source: 0.0.0.0/0 (the default)
+		- "Add Rule"
+		- "Apply Rule Changes"
+	- Test the site by visiting, for example, ``http://ec2-67-202-56-148.compute-1.amazonaws.com``.
+		
+		
+Your site should now be running. Still on the to-do list:
 
-		cat > hooks/post-receive
-		#!/bin/sh
-		GIT_WORK_TREE=/home/ubuntu/www/yourdomain.com
-		export GIT_WORK_TREE
-		git checkout -f	
+* Pushing the site via git, with automatic server restarts, etc., implemented as git post commit hooks.
+* Automating the server setup process via the tools that Jeff and Lindsy were talking about.
 
-	- 
+This site is not production ready, but it should be robust enough for some early development.
+
+
+
+
+
