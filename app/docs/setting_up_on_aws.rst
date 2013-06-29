@@ -25,7 +25,7 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
         - If you're using spot instances: Max Price: $1   Persistent Request: Yes.
     - Advanced Instance Options
         - Choose "Termination Protection".
-    - Storage Device Configuration
+    - Storage Device Configuration. (We create an auxiliary data partition here... this is in anticipation of the db eventually being very large.)
         - Root Volumes: click "Edit".
         - EBS Volumes tab: Create a new volume with:
             - Snapshot: None
@@ -87,8 +87,33 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 		
 	  You should get a pymongo "Connection Refused" error. 
 	  
-
+#) Install and setup mongodb:
+	- Add the 10gen repo, which seems to include some nice install scripts...
 	
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/10gen.list
+	sudo apt-get update
+	sudo apt-get install mongodb-10gen
+
+	- Edit /etc/mongodb.conf , and change ``dbpath=/var/lib/mongodb`` to ``dbpath=/vol/mongodb``, and update permissions:::
+	
+		sudo mkdir /vol/mongodb
+		sudo chown -R mongodb /vol/mongodb
+		
+	- Restart mongo:::
+	
+		sudo service mongodb restart                                                                                         
+		
+	- At this point, you should be able to (optionally) restart the instance and run:::
+	
+		python /vol/crowd-scholar/main.py
+		
+	  without errors.
+	  
+#) 
+	  
+	  
+
 
 
 
