@@ -89,12 +89,12 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 	  You should get a pymongo "Connection Refused" error. 
 	  
 #) Install and setup mongodb:
-	- Add the 10gen repo, which seems to include some nice install scripts...
+	- Add the 10gen repo, which seems to include some nice install scripts...::
 	
-	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-	echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/10gen.list
-	sudo apt-get update
-	sudo apt-get install mongodb-10gen
+	    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+	    echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/10gen.list
+	    sudo apt-get update
+	    sudo apt-get install mongodb-10gen
 
 	- Edit /etc/mongodb.conf , and change ``dbpath=/var/lib/mongodb`` to ``dbpath=/vol/mongodb``, and update permissions:::
 	
@@ -120,11 +120,13 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 	        # Make site accessible from http://localhost/
 	        server_name localhost;
 	
-	        location / { try_files $uri @app }
+	        location / { 
+                    try_files $uri @app;
+                    }
 	        location @app {
-	                include uwsgi_params;                                                                                                                           
-	                uwsgi_pass unix:/tmp/uwsgi.sock
-	                }                                                                                                                                               
+	                include uwsgi_params;
+                    uwsgi_pass unix:/tmp/uwsgi.sock;
+	                }                                                                                                                       
 	        }
 
 	- Configure UWSGI, for example, replace ``/etc/uwsgi/apps-available/uwsgi.ini`` with:::
