@@ -11,9 +11,10 @@ Date: 11June13
 from flask import Response
 
 # Import class registries
-from gather_citparse import CitParse
-from gather_refparse import RefParse
-from gather_validate import Validate
+#from gather_citparse import CitParse
+#from gather_refparse import RefParse
+#from gather_validate import Validate
+import sciparse
 
 
 class JSONController(object):
@@ -63,6 +64,7 @@ class JSONController(object):
         # parse the submission
         parsed_submission = self.parse()
 
+        
         # and insert it into the database
         submission_id = self.insert(parsed_submission)
         # if successful return successful response
@@ -73,8 +75,7 @@ class JSONController(object):
         else:
             print 'submit() not successful'
             return Response(status=500)
-
-
+        
     def detect_publisher(self):
         """detects the publisher type of a user submission
 
@@ -102,6 +103,8 @@ class JSONController(object):
         result = getattr(foo, 'bar')()
         """
 
+        # @todo: reimplement
+        """
         # Look up validatation class
         validate_klass = Validate.get(self.publisher)
 
@@ -110,6 +113,8 @@ class JSONController(object):
 
         # Validate
         validate_instance.validate()
+        """
+        return True
 
     def parse(self):
         """calls parsing_controller on a user submission
@@ -121,11 +126,11 @@ class JSONController(object):
         # @todo: stubbed
 
         # Look up classes
-        cit_parse_klass = CitParse.get(self.publisher)
-        ref_parse_klass = RefParse.get(self.publisher)
+        cit_parse_klass = sciparse.CitParse.get(self.publisher)
+        ref_parse_klass = sciparse.RefParse.get(self.publisher)
         
         # Instantiate meta parse class
-        cit_parse_instance = cit_parse_klass(self.submission['head_ref'])
+        cit_parse_instance = cit_parse_klass(self.submission['citation'])
 
         # Parse citation
         citation = cit_parse_instance.parse()
@@ -134,7 +139,7 @@ class JSONController(object):
         references = []
         
         # Parse references
-        for cited_ref in self.submission['cited_refs']:
+        for cited_ref in self.submission['references']:
 
             ref_parse_instance = ref_parse_klass(cited_ref)
             reference = ref_parse_instance.parse()

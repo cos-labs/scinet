@@ -13,9 +13,9 @@ class DB:
     def __init__(self, host="localhost", port=27017):
         """connects to mongoDB and respective collections"""
         client = MongoClient(host, port)
-        self.db = client.crowdscholar_articles_db
+        self.db = client.crowdscholar
         self.users = self.db.users
-        self.articles = self.db.articles
+        self.production = self.db.production
 
     # need to add an add/validate method
 
@@ -23,6 +23,5 @@ class DB:
     def add(self, submission):
         """ adds submission to articles db """
         # add data
-        id = self.articles.insert(submission)
-        print str(id) + " added to crowdscholar_articles_db"
+        id = self.production.insert(submission)
         return id

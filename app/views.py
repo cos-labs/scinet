@@ -9,6 +9,8 @@ import json
 import raw_db
 import articles_db
 import articles_endpoint_validator
+import uuid
+import os
 
 from flask import render_template, request, Response
 from app import app
@@ -16,8 +18,8 @@ from json_controller import JSONController
 
 # Both DBs set to use the same server... need to check to make sure that's
 #  okay.
-articles_db = raw_db = articles_db.DB(host="localhost", port=27017)
-#raw_db = raw_db.DB(host="localhost", port=27018)
+#articles_db = raw_db = articles_db.DB(host="localhost", port=27017)
+raw_db = raw_db.DB(host="localhost", port=27018)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -104,18 +106,33 @@ def RawEndpoint():
                 user_submission = json.loads(request.data)
             except ValueError:
                 # return error if not a valid JSON
+                print "line 107, failed to load JSON"
                 return Response(status=405)
 
-            # hand user submission ot the controller and return Response
+            # store incoming JSON into raw storage
+            # @todo: hardcode os path information
+            filename = os.path.join(os.getcwd(), "app/raw", getId())
+            with open(filename, "w") as fp:
+                json.dump(user_submission, fp, indent=4)			    
+
+            
+			# hand user submission to the controller and return Response
             controller_response = JSONController(user_submission, db=raw_db).submit()
             print "All done, status code: " + str(controller_response.status_code)
             return controller_response
+            
+            #return Response(status=201)
 
         # user submitted a content-type no currently supported
         else:
+            print request.headers
             print "not a json"
             return Response(status=400)
 
     # user tried to call an unsupported HTTP method
     else:
         return Response(status=405)
+
+# @todo: check for duplicate ideas in /raw
+def getId():
+    return str(uuid.uuid4())
