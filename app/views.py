@@ -11,6 +11,7 @@ import articles_db
 import articles_endpoint_validator
 import uuid
 import os
+import bson
 
 from flask import render_template, request, Response
 from app import app
@@ -111,13 +112,14 @@ def RawEndpoint():
 
             # store incoming JSON into raw storage
             # @todo: hardcode os path information
-            filename = os.path.join(os.getcwd(), "app/raw", getId())
+            uid = getId()
+            filename = os.path.join(os.getcwd(), "app/raw", uid)
             with open(filename, "w") as fp:
                 json.dump(user_submission, fp, indent=4)			    
 
             # @todo: add pointer for raw file to raw_db insertion         
 			# hand user submission to the controller and return Response
-            controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=filename).submit()
+            controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=uid).submit()
             print "All done, status code: " + str(controller_response.status_code)
             return controller_response
             
@@ -133,6 +135,6 @@ def RawEndpoint():
     else:
         return Response(status=405)
 
-# @todo: check for duplicate ideas in /raw
+# @todo: make sure bson ObjectID's are trully unique regardless of db
 def getId():
-    return str(uuid.uuid4())
+    return str(bson.ObjectId())
