@@ -30,7 +30,7 @@ class JSONController(object):
                 405: user submission error
     """
     # @todo: remove defaults, add to docs in views and switch to try/excepts
-    def __init__(self, submission=None, db=None):
+    def __init__(self, submission=None, db=None, raw_file_pointer=None):
         # grab the submission
         if submission is not None:
             self.submission = submission
@@ -41,6 +41,11 @@ class JSONController(object):
             self.db = db
         else:
             raise TypeError('No database instance given.')
+        # grab raw data's pointer
+        if raw_file_pointer is not None:
+            self.raw_file_pointer= raw_file_pointer
+        else:
+            raise TypeError('No raw file pointer given.')
         # determine publisher type
         self.publisher = self.detect_publisher()
 
@@ -64,6 +69,12 @@ class JSONController(object):
         # parse the submission
         parsed_submission = self.parse()
 
+        # add raw file pointer to submission
+        parsed_submission['raw'] #####:138
+
+        print '#############'
+        print parsed_submission['raw']
+        print '#############'
         
         # and insert it into the database
         submission_id = self.insert(parsed_submission)
@@ -123,33 +134,44 @@ class JSONController(object):
                     Response with server error code if unable to be parsed
 
         """
-        # @todo: stubbed
+        
+        # initialize submission result
+        result = {}
 
         # Look up classes
         cit_parse_klass = sciparse.CitParse.get(self.publisher)
         ref_parse_klass = sciparse.RefParse.get(self.publisher)
         
         # Instantiate meta parse class
-        cit_parse_instance = cit_parse_klass(self.submission['citation'])
+        if cit_parse_klass is not None:
+            cit_parse_instance = cit_parse_klass(self.submission['citation'])
+            # Parse citation
+            citation = cit_parse_instance.parse()
+            result['citation'] = citation
+        # publisher we have not created a publisher for
+        else:
+            # @todo:
+            pass
 
-        # Parse citation
-        citation = cit_parse_instance.parse()
-        
         # Initialize references
         references = []
         
-        # Parse references
-        for cited_ref in self.submission['references']:
+        # parse and populate references
+        if ref_parse_klass is not None:
+            # Parse references
+            for cited_ref in self.submission['references']:
 
-            ref_parse_instance = ref_parse_klass(cited_ref)
-            reference = ref_parse_instance.parse()
-            references.append(reference)
+                ref_parse_instance = ref_parse_klass(cited_ref)
+                reference = ref_parse_instance.parse()
+                references.append(reference)
+                result['references'] = references
+        else:
+            # @todo:  
+            pass
         
         # Build result
-        result = {}
-        result['citation'] = citation
-        result['references'] = references
         result['meta-data'] = self.submission['meta']
+        result['raw'] = self.raw_file_pointer
         #@TODO: Expand meta-data
 
         return result

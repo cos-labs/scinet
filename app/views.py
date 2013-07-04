@@ -115,9 +115,9 @@ def RawEndpoint():
             with open(filename, "w") as fp:
                 json.dump(user_submission, fp, indent=4)			    
 
-            
+            # @todo: add pointer for raw file to raw_db insertion         
 			# hand user submission to the controller and return Response
-            controller_response = JSONController(user_submission, db=raw_db).submit()
+            controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=filename).submit()
             print "All done, status code: " + str(controller_response.status_code)
             return controller_response
             
