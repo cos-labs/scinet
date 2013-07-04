@@ -69,11 +69,8 @@ class JSONController(object):
         # parse the submission
         parsed_submission = self.parse()
 
-        # add raw file pointer to submission
-        parsed_submission['raw'] #####:138
-
         print '#############'
-        print parsed_submission['raw']
+        print parsed_submission['_id']
         print '#############'
         
         # and insert it into the database
@@ -171,7 +168,7 @@ class JSONController(object):
         
         # Build result
         result['meta-data'] = self.submission['meta']
-        result['raw'] = self.raw_file_pointer
+        result['_id'] = self.raw_file_pointer
         #@TODO: Expand meta-data
 
         return result
