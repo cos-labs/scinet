@@ -57,10 +57,10 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
     	
     - Mount it permenantly:::
     
-	  sudo mkdir -m 000 /vol
-	  echo "/dev/xvdb /vol auto noatime 0 0" | sudo tee -a /etc/fstab
-	  sudo mount /vol
-	  sudo chown ubuntu:ubuntu -R /vol
+	sudo mkdir -m 000 /vol
+	echo "/dev/xvdb /vol auto noatime 0 0" | sudo tee -a /etc/fstab
+	sudo mount /vol
+	sudo chown ubuntu:ubuntu -R /vol
         
 
 
@@ -100,36 +100,39 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 
 	- Edit /etc/mongodb.conf , and change ``dbpath=/var/lib/mongodb`` to ``dbpath=/vol/mongodb``, and update permissions:::
 	
-		sudo mkdir /vol/mongodb
-		sudo chown -R mongodb /vol/mongodb
+            sudo mkdir /vol/mongodb
+	    sudo chown -R mongodb /vol/mongodb
 		
 	- Restart mongo:::
 	
-		sudo service mongodb restart                                                                                         
+	    sudo service mongodb restart                                                                                         
 		
     - Create storage for raw data coming into crowdscholar and set permissions:::
 
-        cd /vol/crowdscholar/
-        sudo mkdir /vol/crowdscholar/app/raw
-        sudo chown www-data /vol/crowdscholar/app/raw
-        sudo chgrp www-data /vol/crowdscholar/app/raw
+            cd /vol/crowdscholar/
+            sudo mkdir /vol/crowdscholar/app/raw
+            sudo chown www-data /vol/crowdscholar/app/raw
+            sudo chgrp www-data /vol/crowdscholar/app/raw
 	
     - At this point, you should be able to (optionally) restart the instance and run:::
 	
-		python /vol/crowd-scholar/main.py
+	    python /vol/crowd-scholar/main.py
 		
-	  without errors.
+      without errors.
 
 #) Update and setup boto
     - Ubuntu 12.04 has an old version of boto, we need to update this so it can find our keys:::
-      sudo pip uninstall boto
-      sudo pip install boto
+    
+        sudo pip uninstall boto
+        sudo pip install boto
 
     - Setup boto config so our keys will be loaded automatically:::
-      sudo vi /etc/boto.cfg
-      ``[Credentials]
-      aws_access_key_id = <your access key> 
-      aws_secret_access_key = <your secret access key>``
+        
+        sudo vi /etc/boto.cfg
+        
+        [Credentials]
+        aws_access_key_id = <your access key> 
+        aws_secret_access_key = <your secret access key>
 	  
 #) Install and setup NGINX and uWSGI	  
 	- Configure NGINX, for example, replace ``/etc/nginx/sites-available/default``  with:::
