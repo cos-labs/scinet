@@ -20,7 +20,7 @@ from json_controller import JSONController
 # Both DBs set to use the same server... need to check to make sure that's
 #  okay.
 #articles_db = raw_db = articles_db.DB(host="localhost", port=27017)
-raw_db = raw_db.DB(host="localhost", port=27018)
+raw_db = raw_db.DB(host="localhost", port=27017)
 
 
 @app.route('/', methods=['GET', 'POST'])
