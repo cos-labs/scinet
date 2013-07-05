@@ -12,6 +12,7 @@ import articles_endpoint_validator
 import uuid
 import os
 import bson
+import s3_tools
 
 from flask import render_template, request, Response
 from app import app
@@ -114,8 +115,10 @@ def RawEndpoint():
             # @todo: hardcode os path information
             uid = getId()
             filename = os.path.join(os.getcwd(), "app/raw", uid)
-            with open(filename, "w") as fp:
-                json.dump(user_submission, fp, indent=4)			    
+            # new customer boto wrapper
+            s3_tools.store_file('crowdscholar_raw', filename, user_submission)
+            #with open(filename, "w") as fp:
+            #    json.dump(user_submission, fp, indent=4)			    
 
             # @todo: add pointer for raw file to raw_db insertion         
 			# hand user submission to the controller and return Response
