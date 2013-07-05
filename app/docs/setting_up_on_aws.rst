@@ -57,11 +57,13 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
     	
     - Mount it permenantly:::
     
-	sudo mkdir -m 000 /vol
-	echo "/dev/xvdb /vol auto noatime 0 0" | sudo tee -a /etc/fstab
-	sudo mount /vol
-	sudo chown ubuntu:ubuntu -R /vol
+	  sudo mkdir -m 000 /vol
+	  echo "/dev/xvdb /vol auto noatime 0 0" | sudo tee -a /etc/fstab
+	  sudo mount /vol
+	  sudo chown ubuntu:ubuntu -R /vol
         
+
+
     - You might check that this worked:::
     
     	touch /vol/tmp
@@ -105,7 +107,14 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 	
 		sudo service mongodb restart                                                                                         
 		
-	- At this point, you should be able to (optionally) restart the instance and run:::
+    - Create storage for raw data coming into crowdscholar and set permissions:::
+
+        cd /vol/crowdscholar/
+        sudo mkdir /vol/crowdscholar/app/raw
+        sudo chown www-data /vol/crowdscholar/app/raw
+        sudo chgrp www-data /vol/crowdscholar/app/raw
+	
+    - At this point, you should be able to (optionally) restart the instance and run:::
 	
 		python /vol/crowd-scholar/main.py
 		
