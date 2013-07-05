@@ -18,7 +18,12 @@ class DB:
         self.raw = self.db.raw
 
     def add(self, submission):
-        """ adds submission to articles db """
+        """adds submission to articles db
+        
+        :params submission: JSON object to be inserted
+        
+        :returns: ObjectID of newly inserted object 
+         """
         # add data
         id = self.raw.insert(submission)
         return id
