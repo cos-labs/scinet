@@ -40,9 +40,7 @@ def Citebin():
 
     return render_template("citebin.html")
 
-"""begin API handlers
-"""
-
+"""begin API handlers"""
 
 @app.route('/articles', methods=['GET', 'POST'])
 def ArticleEndpoint():
@@ -140,4 +138,8 @@ def RawEndpoint():
 
 # @todo: make sure bson ObjectID's are trully unique regardless of db
 def getId():
+    """generates BSON ObjectID
+
+    :returns: string representation of a ObjectID
+    """
     return str(bson.ObjectId())
