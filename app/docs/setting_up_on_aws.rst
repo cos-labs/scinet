@@ -119,6 +119,17 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 		python /vol/crowd-scholar/main.py
 		
 	  without errors.
+
+#) Update and setup boto
+    - Ubuntu 12.04 has an old version of boto, we need to update this so it can find our keys:::
+      sudo pip uninstall boto
+      sudo pip install boto
+
+    - Setup boto config so our keys will be loaded automatically:::
+      sudo vi /etc/boto.cfg
+      ``[Credentials]
+      aws_access_key_id = <your access key> 
+      aws_secret_access_key = <your secret access key>``
 	  
 #) Install and setup NGINX and uWSGI	  
 	- Configure NGINX, for example, replace ``/etc/nginx/sites-available/default``  with:::
