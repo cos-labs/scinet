@@ -8,11 +8,10 @@ import json
 
 import raw_db
 import articles_db
-import articles_endpoint_validator
 import uuid
 import os
 import bson
-import s3_tools
+from app.util import s3_tools
 
 from flask import render_template, request, Response
 from app import app
