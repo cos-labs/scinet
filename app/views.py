@@ -86,7 +86,7 @@ def ArticleEndpoint():
         # return HTTP submission error code to user
         return Response(status=405)
 
-
+# @todo: Should API endpoints have trailing slashes? e.g.: /raw/
 @app.route('/raw', methods=['GET', 'POST'])
 def RawEndpoint():
     """
@@ -105,30 +105,19 @@ def RawEndpoint():
                 user_submission = json.loads(request.data)
             except ValueError:
                 # return error if not a valid JSON
-                print "line 107, failed to load JSON"
                 return Response(status=405)
 
-            # store incoming JSON into raw storage
-            # @todo: hardcode os path information
+            # generate UID for new entry
             uid = getId()
-            filename = os.path.join(os.getcwd(), "app/raw", uid)
-            # new customer boto wrapper
-            s3_tools.store_file('crowdscholar_raw', filename, user_submission)
-            #with open(filename, "w") as fp:
-            #    json.dump(user_submission, fp, indent=4)			    
-
-            # @todo: add pointer for raw file to raw_db insertion         
-			# hand user submission to the controller and return Response
+            # store incoming JSON in S3 raw storage
+            s3_tools.store_file('crowdscholar_raw', uid, user_submission)
+			
+            # hand user submission to the controller and return Response
             controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=uid).submit()
-            print "All done, status code: " + str(controller_response.status_code)
             return controller_response
-            
-            #return Response(status=201)
 
         # user submitted a content-type no currently supported
         else:
-            print request.headers
-            print "not a json"
             return Response(status=400)
 
     # user tried to call an unsupported HTTP method

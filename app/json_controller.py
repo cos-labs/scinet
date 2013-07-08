@@ -48,7 +48,6 @@ class JSONController(object):
         self.publisher = self.detect_publisher()
 
     def submit(self):
-        print 'json_controller.submit() called'
         """calls the validate and parse methods. If successful, the insert
          method is called.
 
@@ -59,7 +58,6 @@ class JSONController(object):
         try:
             self.validate()
         except:
-            print 'submit() failed'
             return Response(status=405)
 
         # parse the submission
@@ -69,11 +67,9 @@ class JSONController(object):
         submission_id = self.insert(parsed_submission)
         # if successful return successful response
         if submission_id is not None:
-            print 'submit() successful '
             return Response(status=201)
         # otherwise return server error response
         else:
-            print 'submit() not successful'
             return Response(status=500)
         
     def detect_publisher(self):
