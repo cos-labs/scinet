@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>app Package &mdash; crowd-scholar  documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="crowd-scholar  documentation" href="index.html" />
+    <link rel="next" title="util Package" href="app.util.html" />
+    <link rel="prev" title="Welcome to crowd-scholar’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="app.util.html" title="util Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to crowd-scholar’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">crowd-scholar  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="app-package">
+<h1>app Package<a class="headerlink" href="#app-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#module-app" title="app"><tt class="xref py py-mod docutils literal"><span class="pre">app</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-app"></span><p>__init__ file loading and prepping necessary things</p>
+</div>
+<div class="section" id="module-app.articles_db">
+<span id="articles-db-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">articles_db</span></tt> Module<a class="headerlink" href="#module-app.articles_db" title="Permalink to this headline">¶</a></h2>
+<p>DB that interacts with the articles MongoDB
+Author: Harry Rybacki
+Date: 5June13</p>
+<dl class="class">
+<dt id="app.articles_db.DB">
+<em class="property">class </em><tt class="descclassname">app.articles_db.</tt><tt class="descname">DB</tt><big>(</big><em>host='localhost'</em>, <em>port=27017</em><big>)</big><a class="reference internal" href="_modules/app/articles_db.html#DB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.articles_db.DB" title="Permalink to this definition">¶</a></dt>
+<dd><p>class representing pymongo articles DB object</p>
+<dl class="method">
+<dt id="app.articles_db.DB.add">
+<tt class="descname">add</tt><big>(</big><em>submission</em><big>)</big><a class="reference internal" href="_modules/app/articles_db.html#DB.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.articles_db.DB.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds submission to articles db</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Params submission:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">JSON object to be inserted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ObjectID of newly inserted object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.json_controller">
+<span id="json-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">json_controller</span></tt> Module<a class="headerlink" href="#module-app.json_controller" title="Permalink to this headline">¶</a></h2>
+<p>Handles publisher detection and JSON validation/parsing/DB insertion
+originating from the Scholarly API&#8217;s Raw Endpoint
+Author: Harry Rybacki
+Date: 11June13</p>
+<dl class="class">
+<dt id="app.json_controller.JSONController">
+<em class="property">class </em><tt class="descclassname">app.json_controller.</tt><tt class="descname">JSONController</tt><big>(</big><em>submission=None</em>, <em>db=None</em>, <em>raw_file_pointer=None</em><big>)</big><a class="reference internal" href="_modules/app/json_controller.html#JSONController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.json_controller.JSONController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Determines publisher type of user submission and sends it to the
+validator and parser controllers. If the submission is successfully
+validated and parsed, it is handed off to the DB Controller for insertion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Params submission:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">JSON-formatted object representing user submission</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">flask.Response object with appropriate status code
+201: created successfully
+405: user submission error</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="app.json_controller.JSONController.detect_publisher">
+<tt class="descname">detect_publisher</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/json_controller.html#JSONController.detect_publisher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.json_controller.JSONController.detect_publisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>detects the publisher type of a user submission</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String - publisher type
+Response with user submission error code if publisher type does not exist</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="app.json_controller.JSONController.insert">
+<tt class="descname">insert</tt><big>(</big><em>parsed_submission</em><big>)</big><a class="reference internal" href="_modules/app/json_controller.html#JSONController.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.json_controller.JSONController.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls raw_db_controller to insert parsed submission into raw db</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ObjectID - if insertion was successful
+None - if insertion was unsuccessful</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="app.json_controller.JSONController.parse">
+<tt class="descname">parse</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/json_controller.html#JSONController.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.json_controller.JSONController.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls parsing_controller on a user submission</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Scholarly standard JSON if parsing successful
+Response with server error code if unable to be parsed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="app.json_controller.JSONController.submit">
+<tt class="descname">submit</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/json_controller.html#JSONController.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.json_controller.JSONController.submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls the validate and parse methods. If successful, the insert
+method is called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">requests.Response(status=201) if creation/insertion was successful
+requests.Response(status=405) if creation/insertion was unsuccessful</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="app.json_controller.JSONController.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/json_controller.html#JSONController.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.json_controller.JSONController.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls the validaton_controller on a user submission</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True - if validation is successful
+False - if validation is unsuccessful</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.raw_db">
+<span id="raw-db-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">raw_db</span></tt> Module<a class="headerlink" href="#module-app.raw_db" title="Permalink to this headline">¶</a></h2>
+<p>DB that interacts with the raw MongoDB
+Author: Harry Rybacki
+Date: 5June13</p>
+<dl class="class">
+<dt id="app.raw_db.DB">
+<em class="property">class </em><tt class="descclassname">app.raw_db.</tt><tt class="descname">DB</tt><big>(</big><em>host='localhost'</em>, <em>port=27018</em><big>)</big><a class="reference internal" href="_modules/app/raw_db.html#DB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.raw_db.DB" title="Permalink to this definition">¶</a></dt>
+<dd><p>class representing pymongo raw DB object</p>
+<dl class="method">
+<dt id="app.raw_db.DB.add">
+<tt class="descname">add</tt><big>(</big><em>submission</em><big>)</big><a class="reference internal" href="_modules/app/raw_db.html#DB.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.raw_db.DB.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds submission to articles db</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Params submission:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">JSON object to be inserted</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">ObjectID of newly inserted object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.views">
+<span id="views-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">views</span></tt> Module<a class="headerlink" href="#module-app.views" title="Permalink to this headline">¶</a></h2>
+<p>routes file for handling get/post request for crowdscholar
+Author: Harry Rybacki
+Date: 5June13</p>
+<dl class="function">
+<dt id="app.views.ArticleEndpoint">
+<tt class="descclassname">app.views.</tt><tt class="descname">ArticleEndpoint</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/views.html#ArticleEndpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.views.ArticleEndpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>RESTFull API endpoint for retrieving / submitting articles
+&#64;TODO: Switch function to pluggable view approach</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.views.Citebin">
+<tt class="descclassname">app.views.</tt><tt class="descname">Citebin</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/views.html#Citebin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.views.Citebin" title="Permalink to this definition">¶</a></dt>
+<dd><p>drop box for users to donate of raw or specific data for citations to
+our DB</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.views.RawEndpoint">
+<tt class="descclassname">app.views.</tt><tt class="descname">RawEndpoint</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/views.html#RawEndpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.views.RawEndpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>RESTFull API endpoint for submitting raw article data.
+&#64;TODO: Switch function to pluggable view approach</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.views.getId">
+<tt class="descclassname">app.views.</tt><tt class="descname">getId</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/views.html#getId"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.views.getId" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates BSON ObjectID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string representation of a ObjectID</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="app.util.html">util Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.util.html#module-app.util.s3_tools"><tt class="docutils literal"><span class="pre">s3_tools</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">app Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">app</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-app.articles_db"><tt class="docutils literal"><span class="pre">articles_db</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-app.json_controller"><tt class="docutils literal"><span class="pre">json_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-app.raw_db"><tt class="docutils literal"><span class="pre">raw_db</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-app.views"><tt class="docutils literal"><span class="pre">views</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to crowd-scholar&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="app.util.html"
+                        title="next chapter">util Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/app.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="app.util.html" title="util Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to crowd-scholar’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">crowd-scholar  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
