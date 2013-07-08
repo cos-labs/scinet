@@ -155,7 +155,7 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
 	- Configure UWSGI, for example, replace ``/etc/uwsgi/apps-available/uwsgi.ini`` with:::
 	
 		[uwsgi]
-		chdir = /vol/crowd-scholar
+		chdir = /vol/crowd-scholar/crowd-scholar
 		uid = www-data
 		gid = www-data
 		chmod-socket = 666
