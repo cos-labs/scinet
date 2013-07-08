@@ -12,6 +12,6 @@ pyquery==1.2.4
 python-dateutil==1.5
 reppy==0.2.2
 requests==1.2.3
-sciparse==0.1
 url==0.1.0
 wsgiref==0.1.2
+git+https://github.com/jmcarp/sciparse
