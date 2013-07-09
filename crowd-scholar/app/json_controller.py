@@ -147,6 +147,7 @@ class JSONController(object):
         # Build result
         result['meta-data'] = self.submission['meta']
         result['_id'] = self.raw_file_pointer
+        result['hash'] = self.submission.get('hash')
         #@TODO: Expand meta-data
 
         return result

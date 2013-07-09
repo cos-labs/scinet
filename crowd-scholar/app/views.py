@@ -41,6 +41,23 @@ def Citebin():
 
 """begin API handlers"""
 
+# @todo: implement error catching (DB issues?)
+@app.route('/ping', methods=['POST'])
+def PingEndpoint():
+    """API endpoint determines potential article hash exists in db
+    
+    :return: status code 201 -- hash not present, continue submission
+    :return: status code 204 -- hash already exists, drop submission
+    """
+    # grab the hash 
+    target_hash = request.form.get('hash')
+    # if that hash is not in the raw database return a 'no content' status
+    if not raw_db.raw.find({'hash': target_hash}).count():
+        return Response(status=204)
+
+    # otherwise, send return an already 'created' status code
+    return Response(status=201)
+
 @app.route('/articles', methods=['GET', 'POST'])
 def ArticleEndpoint():
     """
