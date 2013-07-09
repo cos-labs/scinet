@@ -18,15 +18,15 @@ import sciparse
 
 
 class JSONController(object):
-    """Determines publisher type of user submission and sends it to the
+    """determines publisher type of user submission and sends it to the
      validator and parser controllers. If the submission is successfully
      validated and parsed, it is handed off to the DB Controller for insertion.
 
-     :params submission: JSON-formatted object representing user submission
+     :param submission: JSON-formatted object representing user submission
 
-     :returns:  flask.Response object with appropriate status code
-                201: created successfully
-                405: user submission error
+     :return: flask.Response object with appropriate status code
+     :return: 201: created successfully
+     :return: 405: user submission error
     """
     def __init__(self, submission=None, db=None, raw_file_pointer=None):
         # grab the submission
@@ -51,8 +51,8 @@ class JSONController(object):
         """calls the validate and parse methods. If successful, the insert
          method is called.
 
-         :returns: requests.Response(status=201) if creation/insertion was successful
-                   requests.Response(status=405) if creation/insertion was unsuccessful
+         :return: requests.Response(status=201) if creation/insertion was successful
+         :return: requests.Response(status=405) if creation/insertion was unsuccessful
         """
         # if user submission is valid
         try:
@@ -75,8 +75,8 @@ class JSONController(object):
     def detect_publisher(self):
         """detects the publisher type of a user submission
 
-         :returns: String - publisher type
-                   Response with user submission error code if publisher type does not exist
+         :return: String - publisher type
+         :return:  Response with user submission error code if publisher type does not exist
         """
         try:
             return self.submission['publisher']
@@ -86,8 +86,8 @@ class JSONController(object):
     def validate(self):
         """calls the validaton_controller on a user submission
 
-         :returns: True - if validation is successful
-                   False - if validation is unsuccessful
+         :return: True - if validation is successful
+         :return: False - if validation is unsuccessful
         """
 
         # @todo: reimplement
@@ -106,8 +106,8 @@ class JSONController(object):
     def parse(self):
         """calls parsing_controller on a user submission
 
-         :returns: Scholarly standard JSON if parsing successful
-                   Response with server error code if unable to be parsed
+         :return: Scholarly standard JSON if parsing successful
+         :return: Response with server error code if unable to be parsed
         """
         
         # initialize submission result
@@ -154,8 +154,8 @@ class JSONController(object):
     def insert(self, parsed_submission):
         """calls raw_db_controller to insert parsed submission into raw db
 
-         :returns: ObjectID - if insertion was successful
-                   None - if insertion was unsuccessful
+         :return: ObjectID - if insertion was successful
+         :retirn: None - if insertion was unsuccessful
         """
         submission_id = self.db.add(parsed_submission)
         return submission_id

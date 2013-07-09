@@ -124,10 +124,10 @@ def RawEndpoint():
     else:
         return Response(status=405)
 
-# @todo: make sure bson ObjectID's are trully unique regardless of db
+# @todo: export into a helper function
 def getId():
     """generates BSON ObjectID
 
-    :returns: string representation of a ObjectID
+    :return: string representation of a ObjectID
     """
     return str(bson.ObjectId())

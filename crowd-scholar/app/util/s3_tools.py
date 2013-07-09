@@ -14,11 +14,11 @@ def _connect():
 def store_file(desired_bucket, filename, payload):
     """adds a file to a specified S3 bucket
         
-    :params bucket: destination bucket
-    :params filename: desired filename
-    :params payload: contents of file
+    :param bucket: destination bucket
+    :param filename: desired filename
+    :param payload: contents of file
 
-    :returns: boolean of success or failure
+    :return: boolean of success or failure
     """ 
     # instansiate connection with S3
     connection = _connect()
@@ -43,8 +43,8 @@ def store_file(desired_bucket, filename, payload):
 def get_file(bucket, filename):
     """retrieves and returns an s3 key
 
-    :params bucket: bucket file is in
-    :params filename: key file is stored in
+    :param bucket: bucket file is in
+    :param filename: key file is stored in
 
     :return: key instance
     """

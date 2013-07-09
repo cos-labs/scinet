@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 
 class DB:
-    """ class representing pymongo raw DB object """
+    """class representing pymongo raw DB object"""
 
     def __init__(self, host="localhost", port=27018):
         """connects to mongoDB and respective collections"""
@@ -20,9 +20,9 @@ class DB:
     def add(self, submission):
         """adds submission to articles db
         
-        :params submission: JSON object to be inserted
+        :param submission: JSON object to be inserted
         
-        :returns: ObjectID of newly inserted object 
+        :return: ObjectID of newly inserted object 
          """
         # add data
         id = self.raw.insert(submission)
