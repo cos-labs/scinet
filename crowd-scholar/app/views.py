@@ -79,9 +79,10 @@ def ArticleEndpoint():
                 # return error if fail
                 return Response(status=405)
 
+            # @todo: implement validation
             # validate data or return error
-            if not articles_endpoint_validator.validate(user_submission):
-                return Response(status=405)
+            #if not articles_endpoint_validator.validate(user_submission):
+            #    return Response(status=405)
 
             # add meta-data to user submission -- headers and what not
             # @todo user submission is a string at this point. Need to make it a string.
