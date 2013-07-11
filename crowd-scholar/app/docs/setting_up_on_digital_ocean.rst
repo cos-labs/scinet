@@ -14,75 +14,76 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
     - Password for your user
 
 #) SSH into your droplet
-    - Open up a terminal and type:
+    - Open up a terminal and type:::
         
-      ``ssh <username>@<ip address>
-        enter the password located in the email``
+        ssh <username>@<ip address>
+        enter the password located in the email
 
 #) Set up a local (non-root) account
-    - Create the user account:
+    - Create the user account:::
         
-      ``adduser ubuntu``
+        adduser ubuntu
     
-    - Give it sudo access:
+    - Give it sudo access:::
         
-      ``visudo
+        visudo
         # Below "root ALL=(ALL:ALL) All" enter 
         ubuntu ALL=(ALL:ALL) ALL
-        # Save the file and exit``
+        # Save the file and exit
 
 #) Logout of your current account and SSH into the server with the new one:
-    - From your terminal enter:
+    - From your terminal enter::: 
         
-        ``ssh ubuntu@<ip address>``
+        ssh ubuntu@<ip address>
     
-#) Create a directory to hold our data:
+#) Create a directory to hold our data:::
     
-  ``sudo mkdir /vol
+    sudo mkdir /vol
     sudo chown ubuntu:ubuntu /vol
-    cd /vol``   
+    cd /vol   
         
-#) Install necessary packages:
-  ``sudo apt-get update
+#) Install necessary packages:::
+	
+	sudo apt-get update
 	sudo apt-get install git python-flask python-pip build-essential python-dev python-requests
 	sudo apt-get install python-pyquery uwsgi-plugin-python uwsgi nginx
-	sudo pip install pymongo reppy nameparser uwsgi``
+	sudo pip install pymongo reppy nameparser uwsgi
 	
 #) Get crowd-scholar.
-	- Checkout the repo:
+	- Checkout the repo:::
         
-      ``# e.g.: https://github.com/hrybacki/crowd-scholar.git
-        git clone https://github.com/user_name/repo.git``
+        # e.g.: https://github.com/hrybacki/crowd-scholar.git
+        git clone https://github.com/user_name/repo.git
         	
-    - Install required libraries:
+    - Install required libraries:::
         
-      ``cd /vol/crowd-scholar
+        cd /vol/crowd-scholar
         sudo pip install -r requirements.txt
-        sudo pip install git+git://github.com/jmcarp/sciparse.git``
+        sudo pip install git+git://github.com/jmcarp/sciparse.git
 
-	- Test it:
+	- Test it:::
 		
-      ``cd crowd-scholar
-		python main.py``
+		cd crowd-scholar
+		python main.py
 		
 	  You should get a pymongo "Connection Refused" error. 
 	  
 #) Install and setup mongodb:
-	- Add the 10gen repo, which seems to include some nice install scripts...
+	- Add the 10gen repo, which seems to include some nice install scripts...::
 	
-	  ``sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+	    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 	    echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/10gen.list
 	    sudo apt-get update
-	    sudo apt-get install mongodb-10gen``
+	    sudo apt-get install mongodb-10gen
 
-	- Edit /etc/mongodb.conf , and change ``dbpath=/var/lib/mongodb`` to ``dbpath=/vol/mongodb``, and update permissions:
+	- Edit /etc/mongodb.conf , and change ``dbpath=/var/lib/mongodb`` to ``dbpath=/vol/mongodb``, and update permissions:::
 	
-          ``sudo mkdir /vol/mongodb
-            sudo chown -R mongodb /vol/mongodb``
+            sudo mkdir /vol/mongodb
+            sudo chown -R mongodb /vol/mongodb
 		
-	- Restart mongo:
+	- Restart mongo:::
 	
-	  ``sudo service mongodb restart``                                                                                         
+	    sudo service mongodb restart                                                                                         
     - At this point, you should be able to (optionally) restart the instance and run:::
 	
 	    python /vol/crowd-scholar/main.py
