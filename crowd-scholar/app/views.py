@@ -127,9 +127,15 @@ def RawEndpoint():
 
             # generate UID for new entry
             uid = getId()
+            
             # store incoming JSON in S3 raw storage
-            s3_tools.store_file('crowdscholar_raw', uid, user_submission)
-			
+            #s3_tools.store_file('crowdscholar_raw', uid, user_submission)
+            
+            # store incoming JSON in raw storage
+            filename = os.path.join(os.getcwd(), "app/raw", uid)
+            with open(filename, "w") as fp:
+                json.dump(user_submission, fp, indent=4)           	
+            
             # hand user submission to the controller and return Response
             controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=uid).submit()
             return controller_response
