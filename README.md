@@ -1,6 +1,6 @@
-## Scholarly -- Tools for building a dataset of scholarly article citations
+## Scholarly -- Crowd-Sourcing the Academic Citation Graph
 
-We're presenting at **SciPy** this year!
+Scholarly is a open source, collaborative project being developed at the Center for Open Science. The primary purpose of Scholarly is to provide the public with a free, open, and comprehensive dataset containing meta-data for academic citations as well as corresponding references. This dataset will allow the public to access, analyze, and distribute academic citation meta-data without restriction. 
 
 ### Scholarly SciPy Project Pages:
 
@@ -14,10 +14,8 @@ We're presenting at **SciPy** this year!
 
 ### Relevant Wiki Pages:
 
-* [API Roadmap](https://github.com/hrybacki/crowd-scholar/wiki/APi-Roadmap)
+* [Contributing -- Working with Git branches](https://github.com/hrybacki/crowd-scholar.wiki.git)
 
 * [API Call Examples](https://github.com/hrybacki/crowd-scholar/wiki/API-Call-Examples)
-
-* [SciPy 2013](https://github.com/hrybacki/crowd-scholar/wiki/SciPy-2013) 
 
 * [Resources](https://github.com/hrybacki/crowd-scholar/wiki/Resources)
