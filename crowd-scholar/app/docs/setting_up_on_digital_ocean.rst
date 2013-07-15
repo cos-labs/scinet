@@ -102,27 +102,11 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
         sudo pip install -r requirements.txt
 
     - Build citelet:
-        - Add the base url for the citelet make file to your to your ~/.bash_profile::
-            
-            export CITELET_BASE_URL="scholarly.io\/citelet"
-        
-        - Ensure it is in your path environment::
-            
-            source ~/.bash_profile
+        - Verify config file is pointing to your desired urls::
+            vi cfg.py
 
-        - Run the make file::
-        
-            cd /vol/citelet
-            make
-
-        - Note: If an error similar to:::
-        
-            File "py-util/minify.py", line 3, in <module>
-                import slimit
-            
-        - Manually install the package:::
-            
-            sudo pip install <package>
+        - Run the fabric build process::
+            fab rsudo deploy
 
 	- Test it:::
 		
