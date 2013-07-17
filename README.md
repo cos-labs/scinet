@@ -14,7 +14,7 @@ Scholarly is a open source, collaborative project being developed at the Center 
 
 ### Relevant Wiki Pages:
 
-* [Contributing -- Working with Git branches](https://github.com/hrybacki/crowd-scholar.wiki.git)
+* [Contributing -- Working with Git branches](https://github.com/hrybacki/crowd-scholar/wiki/Creating-and-using-branches-with-Git)
 
 * [API Call Examples](https://github.com/hrybacki/crowd-scholar/wiki/API-Call-Examples)
 
