@@ -7,7 +7,9 @@ Date: 11June13
 # @todo: do we want this to create and hand a custom Response back to the API?
 # @todo: consolidate this into a class method?
 
-
+import os
+import time
+from tasks import *
 from flask import Response
 
 # Import class registries
@@ -23,12 +25,13 @@ class JSONController(object):
      validated and parsed, it is handed off to the DB Controller for insertion.
 
      :param submission: JSON-formatted object representing user submission
+     :param db: database for storage
 
      :return: flask.Response object with appropriate status code
      :return: 201: created successfully
      :return: 405: user submission error
     """
-    def __init__(self, submission=None, db=None, raw_file_pointer=None):
+    def __init__(self, submission=None, db=None):
         # grab the submission
         if submission is not None:
             self.submission = submission
@@ -39,11 +42,6 @@ class JSONController(object):
             self.db = db
         else:
             raise TypeError('No database instance given.')
-        # grab raw data's pointer
-        if raw_file_pointer is not None:
-            self.raw_file_pointer= raw_file_pointer
-        else:
-            raise TypeError('No raw file pointer given.')
         # determine publisher type
         self.publisher = self.detect_publisher()
 
@@ -54,6 +52,24 @@ class JSONController(object):
          :return: requests.Response(status=201) if creation/insertion was successful
          :return: requests.Response(status=405) if creation/insertion was unsuccessful
         """
+        # queue storing user submission to local disk
+        task = store_file_to_disk.delay(self.submission, os.getcwd())
+
+        # grab the id for the task
+        task_id = task.id
+
+        # get the result from the task
+        result = store_file_to_disk.AsyncResult(task_id)
+        result.get()
+
+        # get the filename returned from the task
+        if result.result is not None:
+            self.file_pointer = result.result
+        # or return error
+        else:
+            print "Failed to store file locally, app/json_controller.py"
+            return Response(status=405)
+
         # if user submission is valid
         try:
             self.validate()
@@ -71,6 +87,7 @@ class JSONController(object):
         # otherwise return server error response
         else:
             return Response(status=500)
+        #return Response(status=201)
         
     def detect_publisher(self):
         """detects the publisher type of a user submission
@@ -116,7 +133,6 @@ class JSONController(object):
         # Look up classes
         cit_parse_klass = sciparse.CitParse.get(self.publisher)
         ref_parse_klass = sciparse.RefParse.get(self.publisher)
-        
         # Instantiate meta parse class
         if cit_parse_klass is not None:
             cit_parse_instance = cit_parse_klass(self.submission['citation'])
@@ -135,7 +151,6 @@ class JSONController(object):
         if ref_parse_klass is not None:
             # Parse references
             for cited_ref in self.submission['references']:
-
                 ref_parse_instance = ref_parse_klass(cited_ref)
                 reference = ref_parse_instance.parse()
                 references.append(reference)
@@ -146,17 +161,33 @@ class JSONController(object):
         
         # Build result
         result['meta-data'] = self.submission['meta']
-        result['_id'] = self.raw_file_pointer
+        result['_id'] = self.file_pointer
         result['hash'] = self.submission.get('hash')
         #@TODO: Expand meta-data
 
         return result
 
     def insert(self, parsed_submission):
-        """calls raw_db_controller to insert parsed submission into raw db
+        """queues inserting parsed submission into raw db
 
          :return: ObjectID - if insertion was successful
-         :retirn: None - if insertion was unsuccessful
+         :return: None - if insertion was unsuccessful
         """
-        submission_id = self.db.add(parsed_submission)
-        return submission_id
+        # @todo: pick better error statuscode
+        # queue storing user submission in MongoDB 
+        try:
+            task = store_file_to_mongodb.delay(parsed_submission, database='crowdscholardev', collection='raw')
+        # if fails, print excepton message and return error statuscode
+        except Exception as e:
+            print type(e), e.message
+            return Response(status=501)
+        
+        # grab the id for the task
+        task_id = task.id
+        
+        # get the result from the task
+        result = store_file_to_mongodb.AsyncResult(task_id)
+        result.get()
+        
+        # retuen the ObjectID created
+        return result.result

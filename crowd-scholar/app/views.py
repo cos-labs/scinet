@@ -5,13 +5,9 @@ Date: 5June13
 """
 
 import json
-
 import raw_db
 import articles_db
-import uuid
 import os
-import bson
-from app.util import s3_tools
 
 from flask import render_template, request, Response
 from app import app
@@ -124,20 +120,9 @@ def RawEndpoint():
             except ValueError:
                 # return error if not a valid JSON
                 return Response(status=405)
-
-            # generate UID for new entry
-            uid = getId()
-            
-            # store incoming JSON in S3 raw storage
-            #s3_tools.store_file('crowdscholar_raw', uid, user_submission)
-            
-            # store incoming JSON in raw storage
-            filename = os.path.join(os.getcwd(), "app/raw", uid)
-            with open(filename, "w") as fp:
-                json.dump(user_submission, fp, indent=4)           	
             
             # hand user submission to the controller and return Response
-            controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=uid).submit()
+            controller_response = JSONController(user_submission, db=raw_db).submit()
             return controller_response
 
         # user submitted a content-type no currently supported
@@ -147,11 +132,3 @@ def RawEndpoint():
     # user tried to call an unsupported HTTP method
     else:
         return Response(status=405)
-
-# @todo: export into a helper function
-def getId():
-    """generates BSON ObjectID
-
-    :return: string representation of a ObjectID
-    """
-    return str(bson.ObjectId())

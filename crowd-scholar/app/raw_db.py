@@ -13,7 +13,7 @@ class DB:
     def __init__(self, host="localhost", port=27018):
         """connects to mongoDB and respective collections"""
         client = MongoClient(host, port)
-        self.db = client.crowdscholar
+        self.db = client.crowdscholardev
         self.users = self.db.users
         self.raw = self.db.raw
 
