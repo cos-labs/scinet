@@ -37,7 +37,7 @@ def Citebin():
         #article_id = db.articles.insert(citation)
         return ""
 
-    return render_template("citebin.html")
+    return render_template("index.html")
 
 """begin API handlers"""
 
