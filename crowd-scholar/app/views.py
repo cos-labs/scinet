@@ -5,38 +5,19 @@ Date: 5June13
 """
 
 import json
-
 import raw_db
-import articles_db
-import uuid
-import os
-import bson
-from app.util import s3_tools
 
-from flask import render_template, request, Response
 from app import app
+from app.util import raw_helpers
+from flask import render_template, request, Response
 from json_controller import JSONController
 
-# Both DBs set to use the same server... need to check to make sure that's
-#  okay.
-#articles_db = raw_db = articles_db.DB(host="localhost", port=27017)
+# connect with MongoDB raw collection
 raw_db = raw_db.DB(host="localhost", port=27017)
 
-
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-@app.route('/citebin', methods=['GET', 'POST'])
-def Citebin():
-    """drop box for users to donate of raw or specific data for citations to
-    our DB"""
-    # if post -- convert and store citation
-    if request.method == 'POST':
-        # convert post data to citation
-        citation = json.loads(request.data)
-        # @todo fix this to meet new db parse/insert procedures
-        #article_id = db.articles.insert(citation)
-        return ""
-
+@app.route('/')
+def index():
+    """landing page for crowdscholar"""
     return render_template("index.html")
 
 """begin API handlers"""
@@ -49,60 +30,20 @@ def PingEndpoint():
     :return: status code 201 -- hash not present, continue submission
     :return: status code 204 -- hash already exists, drop submission
     """
-    # grab the hash 
-    target_hash = request.form.get('hash')
-    # if that hash is not in the raw database return a 'no content' status
-    if not raw_db.raw.find({'hash': target_hash}).count():
+    # if hash article is not located, return 'no content' status
+    if not raw_helpers.raw_article_exists(request.form.get('hash'), raw_db):
         return Response(status=204)
 
-    # otherwise, send return an already 'created' status code
+    # else, return already 'created' status
     return Response(status=201)
 
-@app.route('/articles', methods=['GET', 'POST'])
+@app.route('/articles')
 def ArticleEndpoint():
     """
-    RESTFull API endpoint for retrieving / submitting articles
-    @TODO: Switch function to pluggable view approach
+    Eventual landing page for searching/retrieving articles
     """
-
     if request.method == 'GET':
-        # load articles endpoint informational page
         return render_template("articles.html")
-
-    elif request.method == 'POST':
-        if request.headers['content-type'] == 'application/json':
-            # if post's content-type is JSON
-            try:
-                # try to convert post data
-                user_submission = json.loads(request.data)
-            except ValunteError:
-                # return error if fail
-                return Response(status=405)
-
-            # @todo: implement validation
-            # validate data or return error
-            #if not articles_endpoint_validator.validate(user_submission):
-            #    return Response(status=405)
-
-            # add meta-data to user submission -- headers and what not
-            # @todo user submission is a string at this point. Need to make it a string.
-            # @todo find proper way to append request.headers to the json
-            # user_submission['headers'] = request.headers
-
-            # add parsed data to DB
-            #submission_id = articles_db.add(user_submission)
-
-            # return URI of new resource to submitter
-            #@todo: format return body with objectid?
-            return Response(status=201)
-
-        else:
-            # return HTTP submission error code to user
-            return Response(status=405)
-
-    else:
-        # return HTTP submission error code to user
-        return Response(status=405)
 
 # @todo: Should API endpoints have trailing slashes? e.g.: /raw/
 @app.route('/raw', methods=['GET', 'POST'])
@@ -112,29 +53,23 @@ def RawEndpoint():
     @TODO: Switch function to pluggable view approach
     """
     if request.method == 'GET':
-        # load raw endpoint informational page
         return render_template("raw.html")
 
     elif request.method == 'POST':
-        if request.headers['content-type'] == 'application/json':
         # if post's content-type is JSON
+        if request.headers['content-type'] == 'application/json':
+            # ensure it is a valid JSON
             try:
-                # ensure it is a valid JSON
                 user_submission = json.loads(request.data)
+            # return error if not a valid JSON
             except ValueError:
-                # return error if not a valid JSON
                 return Response(status=405)
 
             # generate UID for new entry
-            uid = getId()
-            
-            # store incoming JSON in S3 raw storage
-            #s3_tools.store_file('crowdscholar_raw', uid, user_submission)
+            uid = raw_helpers.get_id()
             
             # store incoming JSON in raw storage
-            filename = os.path.join(os.getcwd(), "app/raw", uid)
-            with open(filename, "w") as fp:
-                json.dump(user_submission, fp, indent=4)           	
+            raw_helpers.store_json_to_file(user_submission, uid)
             
             # hand user submission to the controller and return Response
             controller_response = JSONController(user_submission, db=raw_db, raw_file_pointer=uid).submit()
@@ -147,11 +82,3 @@ def RawEndpoint():
     # user tried to call an unsupported HTTP method
     else:
         return Response(status=405)
-
-# @todo: export into a helper function
-def getId():
-    """generates BSON ObjectID
-
-    :return: string representation of a ObjectID
-    """
-    return str(bson.ObjectId())

@@ -6,3 +6,4 @@
 *.bak
 .idea/*
 app/depricated/*
+crowd-scholar/app/raw/
