@@ -10,7 +10,7 @@ from pymongo import MongoClient
 class DB:
     """class representing pymongo raw DB object"""
 
-    def __init__(self, host="localhost", port=27018):
+    def __init__(self, host="localhost", port=27017):
         """connects to mongoDB and respective collections"""
         client = MongoClient(host, port)
         self.db = client.crowdscholar
