@@ -4,11 +4,14 @@
 # Imports
 import glob
 import json
-import numpy as np
 from fuzzywuzzy import fuzz
 
 # Project imports
 
+def mean(values):
+    if not values:
+        return 0
+    return float(sum(values)) / len(values)
 
 def read_fixtures(fixture_dir):
     
@@ -140,7 +143,7 @@ def fuzzy_group_compare(group0, group1, fuzzy_rules):
                     fuzzy_scores.append(fuzzy_score)
             
             # Match if mean is above threshold
-            if np.mean(fuzzy_scores) > 75:
+            if mean(fuzzy_scores) > 75:
                 return True
     
     # No match
