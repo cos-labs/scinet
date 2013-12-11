@@ -2,9 +2,9 @@ Flask==0.10.1
 Jinja2==2.7
 MarkupSafe==0.18
 Werkzeug==0.9.1
-boto==2.9.6
 cssselect==0.8
 itsdangerous==0.22
+lxml==3.2.4
 nameparser==0.2.7
 pymongo==2.5.2
 pyquery==1.2.4
