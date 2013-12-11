@@ -21,9 +21,8 @@ class DB:
         """adds submission to articles db
         
         :param submission: JSON object to be inserted
-        
         :return: ObjectID of newly inserted object 
-         """
+        """
         # add data
         id = self.raw.insert(submission)
         return id

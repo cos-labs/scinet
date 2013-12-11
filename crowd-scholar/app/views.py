@@ -39,18 +39,19 @@ def PingEndpoint():
 
 @app.route('/articles')
 def ArticleEndpoint():
-    """
-    Eventual landing page for searching/retrieving articles
-    """
+    """Eventual landing page for searching/retrieving articles"""
     if request.method == 'GET':
         return render_template("articles.html")
 
 # @todo: Should API endpoints have trailing slashes? e.g.: /raw/
 @app.route('/raw', methods=['GET', 'POST'])
 def RawEndpoint():
-    """
-    RESTFull API endpoint for submitting raw article data.
-    @TODO: Switch function to pluggable view approach
+    """RESTFull API endpoint for submitting raw article data.
+
+    :return: status code 405 - invalid JSON or invalid request content-type
+    :return: status code 400 - unsupported content-type requested or invalid
+        publisher
+    :return: status code 201 - successful submission
     """
     if request.method == 'GET':
         return render_template("raw.html")

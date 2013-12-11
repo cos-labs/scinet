@@ -23,7 +23,6 @@ class JSONController(object):
      validated and parsed, it is handed off to the DB Controller for insertion.
 
      :param submission: JSON-formatted object representing user submission
-
      :return: flask.Response object with appropriate status code
      :return: 201: created successfully
      :return: 405: user submission error
