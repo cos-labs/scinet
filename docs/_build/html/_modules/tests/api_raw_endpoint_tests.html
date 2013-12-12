@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tests.api_raw_endpoint_tests &mdash; crowd-scholar 0.01 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.01',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="crowd-scholar 0.01 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">crowd-scholar 0.01 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for tests.api_raw_endpoint_tests</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tests get/post requests for the API raw endpoint</span>
+<span class="sd">Author: Harry Rybacki</span>
+<span class="sd">Date: 7June13</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+
+<div class="viewcode-block" id="APIRawEndpointTests"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests">[docs]</a><span class="k">class</span> <span class="nc">APIRawEndpointTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+<div class="viewcode-block" id="APIRawEndpointTests.setUp"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># set base url for articles endpoint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://localhost:5000/raw&quot;</span>
+</div>
+<div class="viewcode-block" id="APIRawEndpointTests.test_get"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_get">[docs]</a>    <span class="k">def</span> <span class="nf">test_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;tests get request for raw endpoint base url against expected</span>
+<span class="sd">         response code: 200, and expected title.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># retrieve (get) request</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="c"># expected title of articles endpoint</span>
+        <span class="n">html_title</span> <span class="o">=</span> <span class="s">&quot;Crowd Scholar&quot;</span>
+
+        <span class="c"># assert get request returns a status code 200 (success)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">is</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="c"># assert expected title is in response body</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">html_title</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_pass_files_pdf"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_pass_files_pdf">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_pass_files_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_files_docx"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_files_docx">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_files_docx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_pass_files_html"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_pass_files_html">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_pass_files_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_pass_citebin_json"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_pass_citebin_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_pass_citebin_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;broken&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_pass_citelet_json"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_pass_citelet_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_pass_citelet_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;tests post request for raw endpoint base url against expected</span>
+<span class="sd">         response code: 201.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;content-type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;citelet_valid_sample_highwire.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">test_data</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+
+            <span class="c"># retrieve (post) request</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span>
+                                     <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+            <span class="c"># assert post request returns a status code 201 (successly created)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_fail_files_pdf"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_fail_files_pdf">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_fail_files_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_fail_files_docx"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_fail_files_docx">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_fail_files_docx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_fail_files_html"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_fail_files_html">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_fail_files_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_fail_citebin_json"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_fail_citebin_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_fail_citebin_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+    <span class="nd">@unittest.skip</span><span class="p">(</span><span class="s">&quot;Not yet implemented&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="APIRawEndpointTests.test_post_expected_fail_citelet_json"><a class="viewcode-back" href="../../tests.html#tests.api_raw_endpoint_tests.APIRawEndpointTests.test_post_expected_fail_citelet_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_expected_fail_citelet_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;tests post request for raw endpoint base url against expected</span>
+<span class="sd">         response code: 405.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;content-type&#39;</span><span class="p">:</span> <span class="s">&#39;application/json&#39;</span><span class="p">}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;citelet_invalid_sample_highwire.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">test_data</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+
+            <span class="c"># retrieve (post) request</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">),</span>
+                                     <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+            <span class="c"># assert post request returns a status code 405 (user submission error)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">405</span><span class="p">)</span>
+</div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">crowd-scholar 0.01 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Harry Rybacki and Joshua Carp.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>

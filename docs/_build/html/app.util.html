@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>app.util package &mdash; crowd-scholar 0.01 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.01',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="crowd-scholar 0.01 documentation" href="index.html" />
+    <link rel="up" title="app package" href="app.html" />
+    <link rel="next" title="config module" href="config.html" />
+    <link rel="prev" title="app package" href="app.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="config.html" title="config module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="app.html" title="app package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">crowd-scholar 0.01 documentation</a> &raquo;</li>
+          <li><a href="app.html" accesskey="U">app package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="app-util-package">
+<h1>app.util package<a class="headerlink" href="#app-util-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-app.util.raw_helpers">
+<span id="app-util-raw-helpers-module"></span><h2>app.util.raw_helpers module<a class="headerlink" href="#module-app.util.raw_helpers" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="app.util.raw_helpers.get_id">
+<tt class="descclassname">app.util.raw_helpers.</tt><tt class="descname">get_id</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/app/util/raw_helpers.html#get_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.util.raw_helpers.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>generates BSON ObjectID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string representation of a ObjectID</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.util.raw_helpers.raw_article_exists">
+<tt class="descclassname">app.util.raw_helpers.</tt><tt class="descname">raw_article_exists</tt><big>(</big><em>target_hash</em>, <em>target_db</em><big>)</big><a class="reference internal" href="_modules/app/util/raw_helpers.html#raw_article_exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.util.raw_helpers.raw_article_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns number of articles in raw with a hash</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>target_hash</strong> &#8211; hash to check against</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">count of articles with target_hash</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.util.raw_helpers.store_json_to_file">
+<tt class="descclassname">app.util.raw_helpers.</tt><tt class="descname">store_json_to_file</tt><big>(</big><em>contents</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/app/util/raw_helpers.html#store_json_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.util.raw_helpers.store_json_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>stores a JSON file to local storage</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>contents</strong> &#8211; Contents of JSON to be stored</li>
+<li><strong>filename</strong> &#8211; Filename contents will be saved to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.util.s3_tools">
+<span id="app-util-s3-tools-module"></span><h2>app.util.s3_tools module<a class="headerlink" href="#module-app.util.s3_tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="app.util.s3_tools.get_file">
+<tt class="descclassname">app.util.s3_tools.</tt><tt class="descname">get_file</tt><big>(</big><em>bucket</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/app/util/s3_tools.html#get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.util.s3_tools.get_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves and returns an s3 key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bucket</strong> &#8211; bucket file is in</li>
+<li><strong>filename</strong> &#8211; key file is stored in</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">key instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="app.util.s3_tools.store_file">
+<tt class="descclassname">app.util.s3_tools.</tt><tt class="descname">store_file</tt><big>(</big><em>desired_bucket</em>, <em>filename</em>, <em>payload</em><big>)</big><a class="reference internal" href="_modules/app/util/s3_tools.html#store_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#app.util.s3_tools.store_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds a file to a specified S3 bucket</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bucket</strong> &#8211; destination bucket</li>
+<li><strong>filename</strong> &#8211; desired filename</li>
+<li><strong>payload</strong> &#8211; contents of file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">boolean of success or failure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-app.util">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-app.util" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">app.util package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-app.util.raw_helpers">app.util.raw_helpers module</a></li>
+<li><a class="reference internal" href="#module-app.util.s3_tools">app.util.s3_tools module</a></li>
+<li><a class="reference internal" href="#module-app.util">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="app.html"
+                        title="previous chapter">app package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="config.html"
+                        title="next chapter">config module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/app.util.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="config.html" title="config module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="app.html" title="app package"
+             >previous</a> |</li>
+        <li><a href="index.html">crowd-scholar 0.01 documentation</a> &raquo;</li>
+          <li><a href="app.html" >app package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Harry Rybacki and Joshua Carp.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+    </div>
+  </body>
+</html>
