@@ -7,3 +7,7 @@
 .idea/*
 app/depricated/*
 crowd-scholar/app/raw/
+*.egg/
+build/
+dist/
+.coverage

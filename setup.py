@@ -37,7 +37,7 @@ setup(
     url='https://github.com/hrybacki/crowd-scholar/',
     license='MIT Software License',
     author='Harry Rybacki',
-    #tests_require=['pytest'],
+    tests_require=['pytest'],
     install_requires=['Flask>=0.10.1',
                     'Jinja2>=2.7',
                     'MarkupSafe>=0.18',
@@ -53,6 +53,7 @@ setup(
                     'requests>=1.2.3',
                     'url>=0.1.0',
                     'wsgiref>=0.1.2',
+                    'boto==2.9.6',
                     'sciparse==0.1',
                     ],
     dependency_links=['git://github.com/jmcarp/sciparse#egg=sciparse-0.1'],
@@ -60,10 +61,10 @@ setup(
     author_email='hrybacki@gmail.com.com',
     description='Crowdsourcing the academic citation graph.',
     long_description='Tools for outsourcing the academic citation graph',
-    #packages=['sandman'],
-    #include_package_data=True,
+    packages=['crowd-scholar'],
+    include_package_data=True,
     platforms='any',
-    #test_suite='sandman.test.test_sandman',
+    test_suite='crowd-scholar.test.test_crowd-scholar',
     classifiers = [
         'Programming Language :: Python',
         'Development Status :: 4 - Beta',
@@ -76,7 +77,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         ],
-    #extras_require={
-    #    'testing': ['pytest'],
-    #}
+    extras_require={
+        'testing': ['pytest'],
+    }
 )
