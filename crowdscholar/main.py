@@ -1,8 +1,11 @@
-#!flask/bin/python
+from flask import Flask
 
-""" execution point for Flask server """
-from app import app
-from pymongo import MongoClient
+# Setup app
+app = Flask(__name__)
+app.config.from_object('config')
 
-# initilization #
-app.run(debug = True)
+# Import views
+from views import *
+
+if __name__ == '__main__':
+	app.run()

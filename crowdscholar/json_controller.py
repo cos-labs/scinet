@@ -7,14 +7,9 @@ Date: 11June13
 # @todo: do we want this to create and hand a custom Response back to the API?
 # @todo: consolidate this into a class method?
 
+import sciparse
 
 from flask import Response
-
-# Import class registries
-#from gather_citparse import CitParse
-#from gather_refparse import RefParse
-#from gather_validate import Validate
-import sciparse
 
 
 class JSONController(object):
@@ -157,5 +152,5 @@ class JSONController(object):
          :return: ObjectID - if insertion was successful
          :retirn: None - if insertion was unsuccessful
         """
-        submission_id = self.db.add(parsed_submission)
+        submission_id = self.db.raw.insert(parsed_submission)
         return submission_id
