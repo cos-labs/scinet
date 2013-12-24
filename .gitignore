@@ -5,7 +5,6 @@
 *.db
 *.bak
 .idea/*
-crowdscholar/raw_payloads/
 *.egg/
 build/
 dist/
