@@ -61,7 +61,7 @@ setup(
     author_email='hrybacki@gmail.com.com',
     description='Crowdsourcing the academic citation graph.',
     long_description='Tools for outsourcing the academic citation graph',
-    packages=['crowd-scholar'],
+    packages=['crowdscholar'],
     include_package_data=True,
     platforms='any',
     test_suite='crowd-scholar.test.test_crowd-scholar',

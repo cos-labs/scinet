@@ -5,9 +5,9 @@
 *.db
 *.bak
 .idea/*
-app/depricated/*
-crowd-scholar/app/raw/
+crowdscholar/raw_payloads/
 *.egg/
 build/
 dist/
 .coverage
+TODO
