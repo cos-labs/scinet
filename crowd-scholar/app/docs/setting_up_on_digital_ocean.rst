@@ -1,7 +1,8 @@
-Setting up CiteBin development/prototype server on AWS
+Setting up Scholarly development/prototype server on Digital Ocean
 ------------------------------------------------------
 
 Created June 28, 2013  -- Rob Chambers
+
 
 Note that for a real MongoDB service, it's probably better to set up servers via the MongoDB AMI's
 provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial/deploy-mongodb-from-aws-marketplace/#deploy-mongodb-from-aws-marketplace>`_
@@ -14,18 +15,18 @@ provided by AWS, as described `here. <http://docs.mongodb.org/ecosystem/tutorial
     - Username created for your droplet
     - Password for your user
 
-#) SSH into your droplet
-    - Open up a terminal and type:::
+#) SSH into your droplet:
+    - Open up a terminal and type::
         
         ssh <username>@<ip address>
         enter the password located in the email
 
-#) Set up a local (non-root) account
-    - Create the user account:::
+#) Set up a local (non-root) account:
+    - Create the user account::
         
         adduser <username>
     
-    - Give it sudo access:::
+    - Give it sudo access::
         
         visudo
         # Below "root ALL=(ALL:ALL) All" enter 
