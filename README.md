@@ -38,9 +38,9 @@ Scholarly is a open source, collaborative project being developed at the Center 
 
   1. Open up a terminal and type:
 
-        ssh <username>@<ip address>
+          ssh <username>@<ip address>
         enter the password located in the email
-
+          
 1. Set up a local (non-root) account:
 
   1. Create the user account:
