@@ -116,7 +116,7 @@ def unique_group_compare(group0, group1, unique_fields):
 
 def fuzzy_group_compare(group0, group1, fuzzy_rules):
     """Compare two groups of records using fuzzy matching. If any
-    pairs of records are similar enough across gruops, they match.
+    pairs of records are similar enough across groups, they match.
 
     :param group0: First group of records
     :param group1: Second group of records
