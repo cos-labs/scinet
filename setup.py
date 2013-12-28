@@ -33,8 +33,8 @@ class PyTest(TestCommand):
 
 setup(
     name='crowdscholar',
-    version='0.01',
-    url='https://github.com/hrybacki/crowd-scholar/',
+    version='0.02',
+    url='https://github.com/ProjectScholarly/crowd-scholar/',
     license='MIT Software License',
     author='Harry Rybacki',
     tests_require=['pytest'],
@@ -64,7 +64,7 @@ setup(
     packages=['crowdscholar'],
     include_package_data=True,
     platforms='any',
-    test_suite='crowd-scholar.test.test_crowd-scholar',
+    test_suite='crowdscholar.test_crowdscholar',
     classifiers = [
         'Programming Language :: Python',
         'Development Status :: 4 - Beta',
