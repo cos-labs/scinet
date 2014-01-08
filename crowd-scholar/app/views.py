@@ -9,7 +9,7 @@ import raw_db
 
 from app import app
 from app.util import raw_helpers
-from flask import render_template, request, Response
+from flask import render_template, request, Response, make_response, jsonify
 from json_controller import JSONController
 
 # connect with MongoDB raw collection
@@ -54,7 +54,7 @@ def RawEndpoint():
     :return: status code 201 - successful submission
     """
     if request.method == 'GET':
-        return render_template("raw.html")
+        return make_response(jsonify( {'numArticles': raw_db.raw.count()} ), 200)
 
     elif request.method == 'POST':
         # if post's content-type is JSON
