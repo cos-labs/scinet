@@ -1,28 +1,18 @@
-## Scholarly -- Crowd-Sourcing the Academic Citation Graph
+## OSF SciNet -- Crowd-Sourcing the Scientific Citation Network
 
-### What is Scholarly?
+### What is SciNet?
 
-Scholarly is a open source, collaborative project being developed at the Center for Open Science. The primary purpose of Scholarly is to provide the public with a free, open, and comprehensive dataset containing meta-data for academic citations as well as corresponding references. This dataset will allow the public to access, analyze, and distribute academic citation meta-data without restriction. 
-
-### Scholarly SciPy Project Pages:
-
-1. [**Cite Bin**](https://github.com/hrybacki/crowd-scholar/wiki/Citebin-SciPy-Projects) - A web interface for manually entering or pasting citation information and references.
-
-1. [**Citelet**](https://github.com/jmcarp/citelet/wiki/Citelet-SciPy-Projects) - A Chrome extension and bookmarklet which allows users to automatically submit citation meta-data while reading scholarly articles online.
-
-1. [**Scholarly API**](https://github.com/hrybacki/crowd-scholar/wiki/API-SciPy-Projects) - A programmatic tool allowing users to send large amounts of citation data in either parsed or unparsed formats.
-
-1. [**Conflict Management Engine**](https://github.com/hrybacki/conflict-management-engine/wiki/Conflict-Management-Engine-SciPy-Projects) - A tool with which users can assist Scholary by resolving citation data conflicts via a simple, intuitive online user interface.
+SciNet is a open source, collaborative project being developed at the Center for Open Science. The primary purpose of Scholarly is to provide the public with a free, open, and comprehensive dataset containing meta-data for academic citations as well as corresponding references. This dataset will allow the public to access, analyze, and distribute academic citation meta-data without restriction. 
 
 ### Relevant Wiki Pages:
 
-* [Contributing -- Working with Git branches](https://github.com/hrybacki/crowd-scholar/wiki/Creating-and-using-branches-with-Git)
+* [Contributing -- Working with Git branches](https://github.com/centerforopenscience/scinet/wiki/Creating-and-using-branches-with-Git)
 
-* [API Call Examples](https://github.com/hrybacki/crowd-scholar/wiki/API-Call-Examples)
+* [API Call Examples](https://github.com/centerforopenscience/scinet/wiki/API-Call-Examples)
 
-* [Resources](https://github.com/hrybacki/crowd-scholar/wiki/Resources)
+* [Resources](https://github.com/centerforopenscience/scinet/wiki/Resources)
 
-### Getting started with Scholalry
+### Getting started with SciNet
 
 **Note:** This set of packages is not production ready, but it should be robust enough for some early development. Additionally, these instructions were prepared using a Digial Ocean server running Ubuntu 12.04 but they can easily be adapted for running locally or on another cloud service.
 
@@ -77,23 +67,23 @@ Scholarly is a open source, collaborative project being developed at the Center 
           sudo apt-get install python-pyquery uwsgi-plugin-python uwsgi nginx
           sudo pip install pymongo reppy nameparser uwsgi
 
-1. Clone and install Crowdscholar:
+1. Clone and install SciNet:
 
   1. Checkout the repo:
 
-          # e.g.: https://github.com/hrybacki/crowd-scholar.git
+          # e.g.: https://github.com/centerforopenscience/scinet.git
           git clone https://github.com/user_name/repo.git
 
   1. Install required libraries:
 
-          cd /vol/crowd-scholar
+          cd /vol/scinet
           sudo pip install -r requirements.txt
 
   **Note:** If you are installing on Ubuntu, remove the lxml requirement from requirements.txt before running pip install.
 
   1. Test it:
 
-          cd /vol/crowd-scholar/crowd-scholar
+          cd /vol/scinet/scinet
           python main.py
 
   You should get a pymongo "Connection Refused" error.
@@ -118,7 +108,7 @@ Scholarly is a open source, collaborative project being developed at the Center 
 
     At this point, you should be able to (optionally) restart the instance and run:
 
-        python /vol/crowd-scholar/crowd-scholar/main.py
+        python /vol/scinet/scinet/main.py
 
     without errors.
 
@@ -165,13 +155,13 @@ Scholarly is a open source, collaborative project being developed at the Center 
 
           server {
               listen   80;
-                    server_name scholarly;
-                # crowdscholar endpoint
-                  location /crowdscholar {
-                      uwsgi_pass unix:///tmp/crowdscholar.sock;
+                    server_name scinet;
+                # scinet endpoint
+                  location /scinet {
+                      uwsgi_pass unix:///tmp/scinet.sock;
                   include uwsgi_params;
                   # strip path before handing it to app
-                  uwsgi_param SCRIPT_NAME /crowdscholar;
+                  uwsgi_param SCRIPT_NAME /scinet;
                   uwsgi_modifier1 30;
               }
               # citelet endpoint
@@ -188,14 +178,14 @@ Scholarly is a open source, collaborative project being developed at the Center 
 
           sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-  1. Configure UWSGI sockets, for example, create /etc/uwsgi/apps-available/crowdscholar.ini and populate it with:
+  1. Configure UWSGI sockets, for example, create /etc/uwsgi/apps-available/scinet.ini and populate it with:
 
           [uwsgi]
-          chdir = /vol/crowd-scholar/crowd-scholar
+          chdir = /vol/scinet/scinet
           uid = www-data
           gid = www-data
           chmod-socket = 666
-          socket = /tmp/crowdscholar.sock
+          socket = /tmp/scinet.sock
           module = app
           callable = app
 
@@ -212,7 +202,7 @@ Scholarly is a open source, collaborative project being developed at the Center 
 
   1. Finally symlink them to their respective enabled folders:
 
-          sudo ln -s /etc/uwsgi/apps-available/crowdscholar.ini /etc/uwsgi/apps-enabled/crowdscholar.ini
+          sudo ln -s /etc/uwsgi/apps-available/scinet.ini /etc/uwsgi/apps-enabled/scinet.ini
           sudo ln -s /etc/uwsgi/apps-available/citelet.ini /etc/uwsgi/apps-enabled/citelet.ini
 
   1. Enable the app and restart:
@@ -220,7 +210,7 @@ Scholarly is a open source, collaborative project being developed at the Center 
           sudo service nginx restart
           sudo service uwsgi restart
 
-  The site should now be up and running. You can, for instance, install lynx and visit Test the site by visiting, for example, http://<ip address>/crowdscholar -or- http://<ip address>/citelet.
+  The site should now be up and running. You can, for instance, install lynx and visit Test the site by visiting, for example, http://<ip address>/scinet -or- http://<ip address>/citelet.
 
 1. Still on the to-do list:
 
