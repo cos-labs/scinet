@@ -108,7 +108,7 @@ SciNet is a open source, collaborative project being developed at the Center for
 
     At this point, you should be able to (optionally) restart the instance and run:
 
-        python /vol/scinet/scinet/main.py
+        python /vol/scinet/crowd-scholar/main.py
 
     without errors.
 
