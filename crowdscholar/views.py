@@ -1,4 +1,6 @@
+
 import json
+import os
 
 from flask import request, session, g, redirect, url_for, \
         abort, render_template, flash, make_response, jsonify, Response
@@ -7,6 +9,8 @@ from json_controller import JSONController
 from main import app
 from pymongo import MongoClient
 
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 # setup database connection
 def connect_client():
@@ -65,10 +69,15 @@ def raw_endpoint():
         # generate UID for new entry
         uid = get_id()
         # store incoming JSON in raw storage
-        store_json_to_file(user_submission, uid)
+        file_path = os.path.join(
+                        HERE,
+                        'raw_payloads',
+                        str(uid)
+                    )
+        store_json_to_file(user_submission, file_path)
         # hand submission to controller and return Resposne
         db = get_db()
-        controller_response = JSONController(user_submission, db=db, raw_file_pointer=uid).submit()
+        controller_response = JSONController(user_submission, db=db, _id=uid).submit()
         return controller_response
 
     # User submitted an unsupported content-type

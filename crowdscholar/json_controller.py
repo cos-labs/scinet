@@ -22,7 +22,7 @@ class JSONController(object):
      :return: 201: created successfully
      :return: 405: user submission error
     """
-    def __init__(self, submission=None, db=None, raw_file_pointer=None):
+    def __init__(self, submission, db, _id):
         # grab the submission
         if submission is not None:
             self.submission = submission
@@ -34,8 +34,8 @@ class JSONController(object):
         else:
             raise TypeError('No database instance given.')
         # grab raw data's pointer
-        if raw_file_pointer is not None:
-            self.raw_file_pointer= raw_file_pointer
+        if _id is not None:
+            self._id = _id
         else:
             raise TypeError('No raw file pointer given.')
         # determine publisher type
@@ -140,7 +140,7 @@ class JSONController(object):
         
         # Build result
         result['meta-data'] = self.submission['meta']
-        result['_id'] = self.raw_file_pointer
+        result['_id'] = self._id
         result['hash'] = self.submission.get('hash')
         #@TODO: Expand meta-data
 

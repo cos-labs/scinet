@@ -10,7 +10,7 @@ def get_id():
 
 	:return: Unique ObjectID hex
 	"""
-	return str(bson.ObjectId())
+	return bson.ObjectId()
 
 def store_json_to_file(contents, filename):
 	"""Stores a JSON to local storage

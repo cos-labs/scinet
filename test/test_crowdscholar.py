@@ -1,12 +1,38 @@
+from __future__ import absolute_import
+import pytest
 import bson
 import json
-import main
 import os
 import unittest
 
 from bs4 import BeautifulSoup
-from helpers.raw_endpoint import get_id, store_json_to_file
+from crowdscholar import main
+from crowdscholar.helpers.raw_endpoint import get_id, store_json_to_file
 
+
+'''
+@TODO:
+Look at osf/test/basy.py's setup and teardown classes for streaminglining
+the test db setup/tearDown
+'''
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+def assert_file_exists(filepath):
+    try:
+        with open(filepath, 'r'):
+            pass
+        os.remove(filepath)
+    except (IOError):
+        raise AssertionError('file does not exists')
+    return True
+
+
+def test_assert_file_exists():
+    with pytest.raises(AssertionError):
+        assert_file_exists('idontexists')
+    # This assert is deleting the __init__.py ... dumb
+    # assert assert_file_exists(os.path.join(HERE, '__init__.py')) is True
 
 class BasicTestCase(unittest.TestCase):
 
@@ -15,7 +41,7 @@ class BasicTestCase(unittest.TestCase):
         self.app = main.app.test_client()
 
     def tearDown(self):
-        with main.app.app_context():
+        with main.app.test_request_context():
             db = main.get_db()
             db.raw.remove()
 
@@ -25,7 +51,7 @@ class BasicTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         title = BeautifulSoup(response.data).title.string
         self.assertEqual(title, "Crowd Scholar")
-
+    
     def test_404_error(self):
         """Tests page not found error handler working correctly"""
         response = self.app.get('/non_existent_page')
@@ -43,11 +69,10 @@ class BasicTestCase(unittest.TestCase):
                 json.loads(response.data)['error'],
                 u'Method Not Allowed'
                 )
-
     # Database tests
     def test_database(self):
         """Test database connection methods work properly"""
-        with main.app.app_context() as context:
+        with main.app.test_request_context() as context:
             db = main.get_db()
         self.assertIsNot(context.g.mongo_client, None)
         self.assertEqual(context.g.mongo_db, db)
@@ -62,7 +87,7 @@ class BasicTestCase(unittest.TestCase):
     def test_ping_existing_hash(self):
         """Test status code 201 returned for existing hash in db"""
         # Instansiate connection to test db
-        with main.app.app_context() as context:
+        with main.app.test_request_context() as context:
             db = main.get_db()
         # Create hash to test against and insert into test db
         existing_hash = {'hash': 'testhash'}
@@ -85,48 +110,44 @@ class BasicTestCase(unittest.TestCase):
         """Test status code 405 from improper JSON on post to raw"""
         response = self.app.post('/raw',
                                 data="not a json",
-                                headers={'content-type': 'application/json'})
+                                content_type='application/json')
         self.assertEqual(response.status_code, 405)
 
     def test_valid_raw_endpoint_submission(self):
         # Instansiate connection to test db
-        with main.app.app_context() as context:
+        with main.app.test_request_context() as context:
             db = main.get_db()
         # Load valid fixture and prep post payload
         fixture_name = "valid_post_from_citelet"
-        fixture_path = os.path.join(os.getcwd(), 
-                                    "helpers/fixtures/", 
+        fixture_path = os.path.join(HERE, 
+                                    "fixtures", 
                                     fixture_name)
+        print '#########################', fixture_path
         with open(fixture_path) as data_file:    
             data = json.load(data_file)
         payload = json.dumps(data)
         response = self.app.post('/raw',
                                 data=payload,
-                                headers={'content-type': 'application/json'})
+                                content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        
+
     # Helper function tests
     def test_get_ID(self):
         """Test bson ObjectID generator
         @todo: Need to complete. Can't seem to work with bson.ObjectID ...?
         """
         _id = get_id()
-        self.assertEqual(len(_id), 24)
-       
+        assert isinstance(_id, bson.ObjectId) 
+
     def test_store_JSON_to_file(self):
         """Test store raw JSON payload to local directory"""
-        file_name = "test_json"
-        contents = {'payload': 'some stuff'}
-        file_location = os.path.join(os.getcwd(), 
-                                    "raw_payloads/", 
-                                    file_name)
-        contents = {'payload': 'some stuff'}
-        store_json_to_file(contents, file_name)
-        exists = os.path.exists(file_location)
-        if exists:
-            os.remove(file_location)
-        self.assertTrue(exists)
 
+        contents = {'payload': 'some stuff'}
+        filepath = os.path.join(HERE, 'tmp.json')
+        contents = {'payload': 'some stuff'}
+        store_json_to_file(contents, filepath)
+        assert_file_exists(filepath)
+    '''
     # JSON controller tests
     # @todo: write these
     def test_valid_detect_publisher(self):
@@ -136,7 +157,6 @@ class BasicTestCase(unittest.TestCase):
     def test_invalid_detect_publisher(self):
         """Test invalid publisher returns resposne status 400"""
         pass
-
-
+    '''
 if __name__ == '__main__':
     unittest.main()
