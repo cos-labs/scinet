@@ -7,7 +7,7 @@ os.environ['TESTING'] = '1'
 import unittest
 
 from bs4 import BeautifulSoup
-from crowdscholar import main
+from scinet import main
 from test.base import BaseTestCase
 
 

@@ -6,10 +6,8 @@ from flask import Flask
 app = Flask(__name__)
 
 if 'TESTING' in os.environ:
-    print 'loading testing config'
     app.config.from_pyfile('testing_config.py')
 else:
-    print 'loading development config'
     app.config.from_pyfile('development_config.py')
 
 # Import views

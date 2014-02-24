@@ -3,6 +3,6 @@ DEBUG = False
 SECRET_KEY = "12345"
 
 # Development database settings
-DATABASE_IP = "localhost"
-DATABASE_PORT = 27017
-DATABASE_NAME = "test"
+DB_IP = "localhost"
+DB_PORT = 27017
+DB_NAME = "crowdscholar"

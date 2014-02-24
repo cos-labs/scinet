@@ -32,9 +32,9 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 setup(
-    name='crowdscholar',
+    name='SciNet',
     version='0.02',
-    url='https://github.com/ProjectScholarly/crowd-scholar/',
+    url='http://scinet.osf.io',
     license='MIT Software License',
     author='Harry Rybacki',
     tests_require=['pytest'],
@@ -64,7 +64,7 @@ setup(
     packages=['crowdscholar'],
     include_package_data=True,
     platforms='any',
-    test_suite='crowdscholar.test_crowdscholar',
+    test_suite='test.test_unit',
     classifiers = [
         'Programming Language :: Python',
         'Development Status :: 4 - Beta',

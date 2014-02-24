@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>app.json_controller &mdash; crowd-scholar 0.01 documentation</title>
+    <title>scinet.json_controller &mdash; SciNet 0.02 documentation</title>
     
     <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.01',
+        VERSION:     '0.02',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="crowd-scholar 0.01 documentation" href="../../index.html" />
+    <link rel="top" title="SciNet 0.02 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">crowd-scholar 0.01 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SciNet 0.02 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -46,7 +46,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for app.json_controller</h1><div class="highlight"><pre>
+  <h1>Source code for scinet.json_controller</h1><div class="highlight"><pre>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Handles publisher detection and JSON validation/parsing/DB insertion</span>
 <span class="sd">originating from the Scholarly API&#39;s Raw Endpoint</span>
@@ -56,17 +56,12 @@
 <span class="c"># @todo: do we want this to create and hand a custom Response back to the API?</span>
 <span class="c"># @todo: consolidate this into a class method?</span>
 
+<span class="kn">import</span> <span class="nn">sciparse</span>
 
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Response</span>
 
-<span class="c"># Import class registries</span>
-<span class="c">#from gather_citparse import CitParse</span>
-<span class="c">#from gather_refparse import RefParse</span>
-<span class="c">#from gather_validate import Validate</span>
-<span class="kn">import</span> <span class="nn">sciparse</span>
 
-
-<div class="viewcode-block" id="JSONController"><a class="viewcode-back" href="../../app.html#app.json_controller.JSONController">[docs]</a><span class="k">class</span> <span class="nc">JSONController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="JSONController"><a class="viewcode-back" href="../../scinet.html#scinet.json_controller.JSONController">[docs]</a><span class="k">class</span> <span class="nc">JSONController</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;determines publisher type of user submission and sends it to the</span>
 <span class="sd">     validator and parser controllers. If the submission is successfully</span>
 <span class="sd">     validated and parsed, it is handed off to the DB Controller for insertion.</span>
@@ -76,7 +71,7 @@
 <span class="sd">     :return: 201: created successfully</span>
 <span class="sd">     :return: 405: user submission error</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">raw_file_pointer</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submission</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">_id</span><span class="p">):</span>
         <span class="c"># grab the submission</span>
         <span class="k">if</span> <span class="n">submission</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">submission</span> <span class="o">=</span> <span class="n">submission</span>
@@ -88,14 +83,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;No database instance given.&#39;</span><span class="p">)</span>
         <span class="c"># grab raw data&#39;s pointer</span>
-        <span class="k">if</span> <span class="n">raw_file_pointer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">raw_file_pointer</span><span class="o">=</span> <span class="n">raw_file_pointer</span>
+        <span class="k">if</span> <span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">_id</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;No raw file pointer given.&#39;</span><span class="p">)</span>
         <span class="c"># determine publisher type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">detect_publisher</span><span class="p">()</span>
 
-<div class="viewcode-block" id="JSONController.submit"><a class="viewcode-back" href="../../app.html#app.json_controller.JSONController.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JSONController.submit"><a class="viewcode-back" href="../../scinet.html#scinet.json_controller.JSONController.submit">[docs]</a>    <span class="k">def</span> <span class="nf">submit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;calls the validate and parse methods. If successful, the insert</span>
 <span class="sd">         method is called.</span>
 
@@ -120,7 +115,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
         </div>
-<div class="viewcode-block" id="JSONController.detect_publisher"><a class="viewcode-back" href="../../app.html#app.json_controller.JSONController.detect_publisher">[docs]</a>    <span class="k">def</span> <span class="nf">detect_publisher</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JSONController.detect_publisher"><a class="viewcode-back" href="../../scinet.html#scinet.json_controller.JSONController.detect_publisher">[docs]</a>    <span class="k">def</span> <span class="nf">detect_publisher</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;detects the publisher type of a user submission</span>
 
 <span class="sd">         :return: String - publisher type</span>
@@ -131,7 +126,7 @@
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="JSONController.validate"><a class="viewcode-back" href="../../app.html#app.json_controller.JSONController.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JSONController.validate"><a class="viewcode-back" href="../../scinet.html#scinet.json_controller.JSONController.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;calls the validaton_controller on a user submission</span>
 
 <span class="sd">         :return: True - if validation is successful</span>
@@ -151,7 +146,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">True</span>
 </div>
-<div class="viewcode-block" id="JSONController.parse"><a class="viewcode-back" href="../../app.html#app.json_controller.JSONController.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JSONController.parse"><a class="viewcode-back" href="../../scinet.html#scinet.json_controller.JSONController.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;calls parsing_controller on a user submission</span>
 
 <span class="sd">         :return: Scholarly standard JSON if parsing successful</span>
@@ -194,19 +189,19 @@
         
         <span class="c"># Build result</span>
         <span class="n">result</span><span class="p">[</span><span class="s">&#39;meta-data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">submission</span><span class="p">[</span><span class="s">&#39;meta&#39;</span><span class="p">]</span>
-        <span class="n">result</span><span class="p">[</span><span class="s">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_file_pointer</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
         <span class="n">result</span><span class="p">[</span><span class="s">&#39;hash&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">submission</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;hash&#39;</span><span class="p">)</span>
         <span class="c">#@TODO: Expand meta-data</span>
 
         <span class="k">return</span> <span class="n">result</span>
 </div>
-<div class="viewcode-block" id="JSONController.insert"><a class="viewcode-back" href="../../app.html#app.json_controller.JSONController.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_submission</span><span class="p">):</span>
+<div class="viewcode-block" id="JSONController.insert"><a class="viewcode-back" href="../../scinet.html#scinet.json_controller.JSONController.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed_submission</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;calls raw_db_controller to insert parsed submission into raw db</span>
 
 <span class="sd">         :return: ObjectID - if insertion was successful</span>
 <span class="sd">         :retirn: None - if insertion was unsuccessful</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">submission_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">parsed_submission</span><span class="p">)</span>
+        <span class="n">submission_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">parsed_submission</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">submission_id</span></div></div>
 </pre></div>
 
@@ -241,13 +236,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">crowd-scholar 0.01 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">SciNet 0.02 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Harry Rybacki and Joshua Carp.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.
+        &copy; Copyright 2014, Harry Rybacki and Joshua Carp.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

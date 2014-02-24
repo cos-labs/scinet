@@ -7,8 +7,8 @@ import pytest
 import unittest
 
 from test.base import BaseTestCase
-from crowdscholar import json_controller
-from crowdscholar.helpers.raw_endpoint import get_id, store_json_to_file
+from scinet import json_controller
+from scinet.helpers.raw_endpoint import get_id, store_json_to_file
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))

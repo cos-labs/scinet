@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>scinet Package &mdash; SciNet 0.02 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.02',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SciNet 0.02 documentation" href="index.html" />
+    <link rel="next" title="helpers Package" href="scinet.helpers.html" />
+    <link rel="prev" title="Welcome to scinet’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scinet.helpers.html" title="helpers Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to scinet’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SciNet 0.02 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scinet-package">
+<h1>scinet Package<a class="headerlink" href="#scinet-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-scinet.development_config">
+<span id="development-config-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">development_config</span></tt> Module<a class="headerlink" href="#module-scinet.development_config" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-scinet.json_controller">
+<span id="json-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">json_controller</span></tt> Module<a class="headerlink" href="#module-scinet.json_controller" title="Permalink to this headline">¶</a></h2>
+<p>Handles publisher detection and JSON validation/parsing/DB insertion
+originating from the Scholarly API&#8217;s Raw Endpoint
+Author: Harry Rybacki
+Date: 11June13</p>
+<dl class="class">
+<dt id="scinet.json_controller.JSONController">
+<em class="property">class </em><tt class="descclassname">scinet.json_controller.</tt><tt class="descname">JSONController</tt><big>(</big><em>submission</em>, <em>db</em>, <em>_id</em><big>)</big><a class="reference internal" href="_modules/scinet/json_controller.html#JSONController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.json_controller.JSONController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>determines publisher type of user submission and sends it to the
+validator and parser controllers. If the submission is successfully
+validated and parsed, it is handed off to the DB Controller for insertion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>submission</strong> &#8211; JSON-formatted object representing user submission</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">flask.Response object with appropriate status code</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">201: created successfully</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">405: user submission error</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="scinet.json_controller.JSONController.detect_publisher">
+<tt class="descname">detect_publisher</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/json_controller.html#JSONController.detect_publisher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.json_controller.JSONController.detect_publisher" title="Permalink to this definition">¶</a></dt>
+<dd><p>detects the publisher type of a user submission</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String - publisher type</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Response with user submission error code if publisher type does not exist</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scinet.json_controller.JSONController.insert">
+<tt class="descname">insert</tt><big>(</big><em>parsed_submission</em><big>)</big><a class="reference internal" href="_modules/scinet/json_controller.html#JSONController.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.json_controller.JSONController.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls raw_db_controller to insert parsed submission into raw db</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ObjectID - if insertion was successful</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Retirn :</th><td class="field-body">None - if insertion was unsuccessful</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scinet.json_controller.JSONController.parse">
+<tt class="descname">parse</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/json_controller.html#JSONController.parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.json_controller.JSONController.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls parsing_controller on a user submission</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Scholarly standard JSON if parsing successful</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Response with server error code if unable to be parsed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scinet.json_controller.JSONController.submit">
+<tt class="descname">submit</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/json_controller.html#JSONController.submit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.json_controller.JSONController.submit" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls the validate and parse methods. If successful, the insert
+method is called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">requests.Response(status=201) if creation/insertion was successful</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">requests.Response(status=405) if creation/insertion was unsuccessful</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scinet.json_controller.JSONController.validate">
+<tt class="descname">validate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/json_controller.html#JSONController.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.json_controller.JSONController.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls the validaton_controller on a user submission</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True - if validation is successful</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">False - if validation is unsuccessful</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-scinet.main">
+<span id="main-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">main</span></tt> Module<a class="headerlink" href="#module-scinet.main" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-scinet.testing_config">
+<span id="testing-config-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">testing_config</span></tt> Module<a class="headerlink" href="#module-scinet.testing_config" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-scinet.views">
+<span id="views-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">views</span></tt> Module<a class="headerlink" href="#module-scinet.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scinet.views.close_db">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">close_db</tt><big>(</big><em>error</em><big>)</big><a class="reference internal" href="_modules/scinet/views.html#close_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.close_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes connection with Mongo client</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.connect_client">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">connect_client</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/views.html#connect_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.connect_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects to Mongo client</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.get_db">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">get_db</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/views.html#get_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.get_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects to Mongo database</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.index">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">index</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/views.html#index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Landing pgae for Crowdscholar API</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.method_not_allowed">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">method_not_allowed</tt><big>(</big><em>error</em><big>)</big><a class="reference internal" href="_modules/scinet/views.html#method_not_allowed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.method_not_allowed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.not_found">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">not_found</tt><big>(</big><em>error</em><big>)</big><a class="reference internal" href="_modules/scinet/views.html#not_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.not_found" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.ping_endpoint">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">ping_endpoint</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/views.html#ping_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.ping_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>API endpoint determines potential article hash exists in db</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">status code 204 &#8211; hash not present, continue submissio</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">status code 201 &#8211; hash already exists, drop submission</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="scinet.views.raw_endpoint">
+<tt class="descclassname">scinet.views.</tt><tt class="descname">raw_endpoint</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/scinet/views.html#raw_endpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scinet.views.raw_endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>API endpoint for submitting raw article data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">status code 405 - invalid JSON or invalid request type</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">status code 400 - unsupported content-type or invalid publisher</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">status code 201 - successful submission</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="scinet.helpers.html">helpers Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scinet.helpers.html#module-scinet.helpers.raw_endpoint"><tt class="docutils literal"><span class="pre">raw_endpoint</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">scinet Package</a><ul>
+<li><a class="reference internal" href="#module-scinet.development_config"><tt class="docutils literal"><span class="pre">development_config</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-scinet.json_controller"><tt class="docutils literal"><span class="pre">json_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-scinet.main"><tt class="docutils literal"><span class="pre">main</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-scinet.testing_config"><tt class="docutils literal"><span class="pre">testing_config</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-scinet.views"><tt class="docutils literal"><span class="pre">views</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to scinet&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="scinet.helpers.html"
+                        title="next chapter">helpers Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/scinet.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="scinet.helpers.html" title="helpers Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to scinet’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">SciNet 0.02 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Harry Rybacki and Joshua Carp.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
