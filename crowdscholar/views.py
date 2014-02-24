@@ -1,4 +1,3 @@
-
 import json
 import os
 
@@ -7,21 +6,26 @@ from flask import request, session, g, redirect, url_for, \
 from helpers.raw_endpoint import get_id, store_json_to_file
 from json_controller import JSONController
 from main import app
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
+
 # setup database connection
 def connect_client():
     """Connects to Mongo client"""
-    return  MongoClient(app.config['DATABASE_IP'], app.config['DATABASE_PORT'])
+    try:
+        return MongoClient(app.config['DB_IP'], app.config['DB_PORT'])
+    except errors.ConnectionFailure as e:
+        raise e
+
 
 def get_db():
     """Connects to Mongo database"""
     if not hasattr(g, 'mongo_client'):
         g.mongo_client = connect_client()
-        g.mongo_db = getattr(g.mongo_client, app.config['DATABASE_NAME'])
+        g.mongo_db = getattr(g.mongo_client, app.config['DB_NAME'])
     return g.mongo_db
 
 @app.teardown_appcontext
