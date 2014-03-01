@@ -48,6 +48,7 @@ SciNet is a open source, collaborative project being developed at the Center for
 
   1. From your terminal enter:
 
+          exit
           ssh <username>@<ip address>
 
 1. Create a directory to hold our data:
@@ -71,7 +72,7 @@ SciNet is a open source, collaborative project being developed at the Center for
 
   1. Checkout the repo:
 
-          # e.g.: https://github.com/centerforopenscience/scinet.git
+          # Unless you have a forked SciNet use: https://github.com/centerforopenscience/scinet.git
           git clone https://github.com/user_name/repo.git
 
   1. Install required libraries:
@@ -116,7 +117,8 @@ SciNet is a open source, collaborative project being developed at the Center for
 
   1. Checkout the repo:
 
-          # e.g.: https://github.com/jmcarp/citelet.git
+          cd /vol
+          # Unless you have forked scinet-citelet use: https://github.com/centerforopenscience/scinet-citelet.git
           git clone https://github.com/user_name/repo.git
 
   1. Install required libraries::
