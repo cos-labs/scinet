@@ -32,9 +32,9 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 setup(
-    name='crowdscholar',
-    version='0.01',
-    url='https://github.com/hrybacki/crowd-scholar/',
+    name='SciNet',
+    version='0.02',
+    url='http://scinet.osf.io',
     license='MIT Software License',
     author='Harry Rybacki',
     tests_require=['pytest'],
@@ -61,10 +61,10 @@ setup(
     author_email='hrybacki@gmail.com.com',
     description='Crowdsourcing the academic citation graph.',
     long_description='Tools for outsourcing the academic citation graph',
-    packages=['crowd-scholar'],
+    packages=['crowdscholar'],
     include_package_data=True,
     platforms='any',
-    test_suite='crowd-scholar.test.test_crowd-scholar',
+    test_suite='test.test_unit',
     classifiers = [
         'Programming Language :: Python',
         'Development Status :: 4 - Beta',

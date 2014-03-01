@@ -19,7 +19,7 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath('/Users/hrybacki/git/crowd-scholar/crowd-scholar/crowd-scholar'))
+sys.path.insert(0, os.path.abspath('/Users/hrybacki/git/crowd-scholar/scinet/scinet'))
 
 # -- General configuration ------------------------------------------------
 
@@ -47,8 +47,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'crowd-scholar'
-copyright = u'2013, Harry Rybacki and Joshua Carp'
+project = u'SciNet'
+copyright = u'2014, Harry Rybacki and Joshua Carp'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -62,7 +62,7 @@ release = ''
 # grab release/version information from package
 import pkg_resources
 try:
-    release = pkg_resources.get_distribution('crowdscholar').version
+    release = pkg_resources.get_distribution('SciNet').version
 except pkg_resources.DistributionNotFound:
     print 'To build the documentation, The distribution information of sandman'
     print 'Has to be available.  Either install the package into your'
@@ -195,7 +195,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'crowd-scholardoc'
+htmlhelp_basename = 'scinetdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -215,7 +215,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'crowd-scholar.tex', u'crowd-scholar Documentation',
+  ('index', 'scinet.tex', u'SciNet Documentation',
    u'Author', 'manual'),
 ]
 
@@ -245,7 +245,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'crowd-scholar', u'crowd-scholar Documentation',
+    ('index', 'SciNet', u'SciNet Documentation',
      [u'Author'], 1)
 ]
 
@@ -259,8 +259,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'crowd-scholar', u'crowd-scholar Documentation',
-   u'Author', 'crowd-scholar', 'One line description of project.',
+  ('index', 'SciNet', u'SciNet Documentation',
+   u'Author', 'SciNet', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -280,10 +280,10 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'crowd-scholar'
-epub_author = u'Author'
-epub_publisher = u'Harry Rybacki and Joshua Carp'
-epub_copyright = u'2013, Harry Rybacki and Joshua Carp'
+epub_title = u'SciNet'
+epub_author = u'Harry Rybacki and Joshua Carp'
+epub_publisher = u''
+epub_copyright = u'2014, Harry Rybacki and Joshua Carp'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'crowd-scholar'
