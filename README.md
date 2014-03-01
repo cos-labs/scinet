@@ -108,7 +108,7 @@ SciNet is a open source, collaborative project being developed at the Center for
 
     At this point, you should be able to (optionally) restart the instance and run:
 
-        python /vol/scinet/scinet/main.py
+        python /vol/scinet/crowd-scholar/main.py
 
     without errors.
 
@@ -116,19 +116,19 @@ SciNet is a open source, collaborative project being developed at the Center for
 
   1. Checkout the repo:
 
-          # e.g.: https://github.com/jmcarp/citelet.git
+          # e.g.: https://github.com/CenterForOpenScience/scinet-citelet.git
           git clone https://github.com/user_name/repo.git
 
   1. Install required libraries::
 
-          cd /vol/citelet
+          cd /vol/scinet-citelet
           sudo pip install -r requirements.txt
 
 1. Build Citelet:
 
   1. Verify config file is pointing to your desired urls:
 
-          vi /vol/citelet/cfg.py
+          vi /vol/scinet-citelet/cfg.py
 
   For more information visit the [Citelet docs](https://github.com/jmcarp/citelet/blob/master/README.md).
 
@@ -138,7 +138,7 @@ SciNet is a open source, collaborative project being developed at the Center for
 
   1. Test it:
 
-          cd /vol/citelet/app
+          cd /vol/scinet-citelet/app
           python main.py
 
 1. Setup boto config so our keys will be loaded automatically:
