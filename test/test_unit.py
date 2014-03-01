@@ -2,7 +2,6 @@ from __future__ import absolute_import
 
 import bson
 import os
-os.environ['TESTING'] = '1'
 import pytest
 import unittest
 

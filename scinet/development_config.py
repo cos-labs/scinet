@@ -1,3 +1,12 @@
+import os
+
+DEBUG = True
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
+DB_NAME = os.environ.get("DB_NAME")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+"""
 # Development server settings
 DEBUG = False
 SECRET_KEY = "12345"
@@ -6,3 +15,4 @@ SECRET_KEY = "12345"
 DB_IP = "localhost"
 DB_PORT = 27017
 DB_NAME = "crowdscholar"
+"""

@@ -16,7 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 def connect_client():
     """Connects to Mongo client"""
     try:
-        return MongoClient(app.config['DB_IP'], app.config['DB_PORT'])
+        return MongoClient(app.config['DB_HOST'], int(app.config['DB_PORT']))
     except errors.ConnectionFailure as e:
         raise e
 

@@ -6,6 +6,7 @@
 *.bak
 .idea/*
 *.egg/
+*.egg-info/
 build/
 dist/
 .coverage
