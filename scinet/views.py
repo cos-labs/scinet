@@ -112,10 +112,13 @@ def raw_endpoint():
 @app.route('/requestnewgroup/', methods=['POST'])
 def request_new_group():
     # Grab submission form data and prepare email message
-    data = json.loads(request.data)
-    msg = "Someone has request that you add %s to the leaderboard groups. \
-            The groups website is %s and the submitter can be reached at %s." \
-         % (data['new_group_name'], data['new_group_website'], data['submitter_email'])
+    data = request.json
+    msg = "Someone has request that you add {group_name} to the leaderboard \
+        groups. The groups website is {group_website} and the submitter can \
+        be reached at {submitter_email}.".format(
+                                            group_name=data['new_group_name'],
+                                            group_website=data['new_group_website'],
+                                            submitter_email=data['submitter_email'])
     return Response(status=200)
     '''
     try:

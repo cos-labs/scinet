@@ -58,7 +58,8 @@ class JSONController(object):
         parsed_submission = self.parse()
 
         # Update counter
-        if "group" in parsed_submission['meta-data'].keys():
+        group = parsed_submission['meta-data'].get('group')
+        if group is not None:
             group_id = parsed_submission['meta-data']['group']
 
             # verify group exists in groups

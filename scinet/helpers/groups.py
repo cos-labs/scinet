@@ -28,4 +28,4 @@ def get_groups(groups_collection):
     :return: List of group names
     """
     groups = groups_collection.find()
-    return [group for group in groups]
+    return list(groups)
