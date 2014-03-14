@@ -1,11 +1,14 @@
 from __future__ import absolute_import
 
 import json
+import os
 import unittest
 
 from bs4 import BeautifulSoup
 from scinet import main
 from test.base import BaseTestCase
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 class TestViews(BaseTestCase):
@@ -18,12 +21,14 @@ class TestViews(BaseTestCase):
         """Ensure test client's is connected to correct MongoDB"""
         assert self._client.host == self.app.application.config['DB_HOST']
 
+    '''
     # General page tests
     def test_index(self):
         response = self.app.get('/', content_type='html/css')
         self.assertEqual(response.status_code, 200)
         title = BeautifulSoup(response.data).title.string
         self.assertEqual(title, "Crowd Scholar")
+    '''
 
     def test_404_error(self):
         """Tests page not found error handler working correctly"""
@@ -53,7 +58,7 @@ class TestViews(BaseTestCase):
         """Test status code 201 returned for existing hash in db"""
         # Create hash to test against and insert into test db
         existing_hash = {'hash': 'testhash'}
-        self.db.raw.insert(existing_hash)
+        self._db.raw.insert(existing_hash)
         # Post to endpoint with test hash
         response = self.app.post('/ping', data=existing_hash)
         self.assertEqual(response.status_code, 201)
@@ -73,6 +78,35 @@ class TestViews(BaseTestCase):
                                 data="not a json",
                                 content_type='application/json')
         self.assertEqual(response.status_code, 405)
+
+    def test_valid_JSON_with_group(self):
+        """Test status code 201 from successful JSON post to raw"""
+        with open('fixtures/valid_post_from_citelet_with_group', 'r') as fp:
+            raw_payload = json.load(fp)
+        with open(os.path.join(HERE, 'fixtures/test_groups'), 'r') as fp:
+            self.test_groups = json.load(fp)['groups']
+        for group in self.test_groups:
+            self._groups_collection.insert(group)
+
+        payload = json.dumps(raw_payload)
+        response = self.app.post(
+                                '/raw',
+                                data=payload,
+                                content_type='application/json')
+        submissions = self._groups_collection.find_one({'_id': self.test_groups[0]['_id']})['submissions']
+        assert submissions == self.test_groups[0]['submissions']+1
+        assert response.status_code == 201
+
+    def test_valid_JSON(self):
+        """Test status code 201 from successful JSON post to raw"""
+        with open('fixtures/valid_post_from_citelet', 'r') as fp:
+            raw_payload = json.load(fp)
+        payload = json.dumps(raw_payload)
+        response = self.app.post(
+                                '/raw',
+                                data=payload,
+                                content_type='application/json')
+        assert response.status_code == 201
 
 if __name__ == '__main__':
     unittest.main()

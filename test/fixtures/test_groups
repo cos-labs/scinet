@@ -1,0 +1,19 @@
+{
+    "groups": [
+        {
+            "_id": "123",
+            "group_name": "Harvard University",
+            "submissions": 102033
+        },
+        {
+            "_id": "456",
+            "group_name": "Boston University",
+            "submissions": 78234
+        },
+        {
+            "_id": "789",
+            "group_name": "Bob Jones University",
+            "submissions": 100
+        }
+    ]
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Harry Rybacki and Joshua Carp">
+    <link rel="shortcut icon" href="../static/img/favicon.ico">
+
+    <title>SciNet Leaderboard</title>
+
+    <!-- jQeury JS -->
+    <script src="../static/js/jquery.js"></script>
+
+    <!-- Bootstrap core CSS/JS-->
+    <script src="../static/js/bootstrap.js"></script>
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../static/js/html5shiv.js"></script>
+      <script src="../static/js/respond.min.js"></script>
+    <![endif]-->
+
+        <!-- modal calls -->
+    <script>
+        function submitNewGroupRequest(){
+            var data = {};
+            $("#requestNewGroup :input").each(function(){
+                    data[$(this).attr("name")] = $(this).val();
+            });
+            $.ajax("requestnewgroup/", {
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function(result){
+                    $('#submitUniModal').modal('hide');
+                    alert("Thank you for your submission! You will receive an email within a few days!");
+                }
+            });
+        }
+    </script>
+
+    <style type="text/css">
+      /* Custom container */
+      .container {
+        max-width: 730px;
+      }
+      /* Custom row  */
+      .row {
+        text-align: center;
+      }
+      .row h1 {
+        font-size: 72px;
+      }
+      .row .btn {
+        font-size: 21px;
+      }
+  </style>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="/">Home</a></li>
+          <li><a href="/citelet/">Citelet</a></li>
+          <li><a href="/scinet/faq">FAQ</a></li>
+          <li class="active"><a href="/scinet/leaderboard">Leaderboard</a></li>
+          <li><a class="hidden" href="/scinet/">Crowd Scholar</a></li>
+        </ul>
+        <h3 class="text-muted">OSF SciNet</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+
+          <hr />
+          <h1>SciNet Citelet</h1>
+          <h2>Open Science Leaderboard</h2>
+          <hr />
+
+          <!-- Mockup of leadership board -->
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>University</th>
+                    <th>Total Submissions</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for group in groups %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ group['group_name'] }}</td>
+                    <td>{{ group['successful_submissions'] }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+
+          <!-- Button trigger modal -->
+          <button class="btn btn-primary" data-toggle="modal" data-target="#submitUniModal">
+          <h4 class="modal-title">Don't see your University?</h4>
+          </button>
+
+          <!-- Modal -->
+            <div class="modal fade" id="submitUniModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Request a university to be added</h4>
+                            <br />
+                            <p>Is your university not on the leaderboard?</p>
+                            <p>Fill out the form and submit it for review and we will email you after reviewing your request!</p>
+                        </div>
+                        <div class="modal-body">
+                            <form id="requestNewGroup" role="form">
+                                <div class="form-group">
+                                    <label for="inputNewGroupName">Name of University</label>
+                                    <input type="text" name="new_group_name" class="form-control" id="inputNewGroupName" placeholder="Enter the desired university name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputGroupWebsite">University Website</label>
+                                    <input type="text" name="new_group_website" class="form-control" id="inputGroupWebsite" placeholder="Enter link to desired universities home page">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSubmitterEmail">Your Email</label>
+                                    <input type="text" name="submitter_email" class="form-control" id="inputSubmitterEmail" placeholder="Enter your email">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onClick="submitNewGroupRequest()">Submit Request</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          <hr />
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-4"><p>&copy; Center for Open Science 2014</p></div>
+          <div class="col-md-4">
+            <a href="http://twitter.com/OSFramework"><img src="/static/img/twitter_alt.png" alt="Twitter" height="24" width="24"></a>
+            <a href="https://www.facebook.com/OpenScienceFramework"><img src="/static/img/facebook.png" alt="Facebook" height="24" width="24"></a>
+            <a href="https://groups.google.com/forum/#!forum/openscienceframework"><img src="/static/img/google.png" alt="Google Group" height="24" width="24"></a>
+            <a href="https://github.com/ProjectScholarly/"><img src="/static/img/github_alt.png" alt="GitHub" height="24" width="24"></a>
+            <a href="https://plus.google.com/103557785986281627994" rel="publisher"><img src="/static/img/googleplus.png" alt="Google Plus" height="24" width="24"></a>
+          <div class="col-md-2"></div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

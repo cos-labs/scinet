@@ -9,7 +9,7 @@ Date: 11June13
 
 import sciparse
 
-from flask import Response
+from flask import g, Response
 
 
 class JSONController(object):
@@ -57,8 +57,22 @@ class JSONController(object):
         # parse the submission
         parsed_submission = self.parse()
 
-        # and insert it into the database
+        # Update counter
+        if "group" in parsed_submission['meta-data'].keys():
+            group_id = parsed_submission['meta-data']['group']
+
+            # verify group exists in groups
+            if g.groups_collection.find({'_id': group_id}):
+                # update submission counter
+                g.groups_collection.update(
+                                        {'_id': group_id},
+                                        {'$inc': {'submissions': 1}},
+                                        upsert=False,
+                                        multi=False)
+
+        # Insert submission into the database
         submission_id = self.insert(parsed_submission)
+
         # if successful return successful response
         if submission_id is not None:
             return Response(status=201)

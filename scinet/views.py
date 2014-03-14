@@ -1,9 +1,9 @@
 import json
 import os
 
-from flask import request, session, g, redirect, url_for, \
-        abort, render_template, flash, make_response, jsonify, Response
+from flask import request, g, render_template, make_response, jsonify, Response
 from helpers.raw_endpoint import get_id, store_json_to_file
+from helpers.groups import get_groups
 from json_controller import JSONController
 from main import app
 from pymongo import MongoClient, errors
@@ -26,6 +26,7 @@ def get_db():
     if not hasattr(g, 'mongo_client'):
         g.mongo_client = connect_client()
         g.mongo_db = getattr(g.mongo_client, app.config['DB_NAME'])
+        g.groups_collection = g.mongo_db[os.environ.get('DB_GROUPS_COLLECTION')]
     return g.mongo_db
 
 @app.teardown_appcontext
@@ -36,16 +37,28 @@ def close_db(error):
 
 # Begin view routes
 @app.route('/')
-@app.route('/index')
+@app.route('/index/')
 def index():
-    """Landing pgae for Crowdscholar API"""
+    """Landing page for SciNet"""
     return render_template("index.html")
+
+@app.route('/faq/')
+def faq():
+    """FAQ page for SciNet"""
+    return render_template("faq.html")
+
+@app.route('/leaderboard/')
+def leaderboard():
+    """Leaderboard page for SciNet"""
+    get_db()
+    groups = get_groups(g.groups_collection)
+    return render_template("leaderboard.html", groups=groups)
 
 @app.route('/ping', methods=['POST'])
 def ping_endpoint():
     """API endpoint determines potential article hash exists in db
 
-    :return: status code 204 -- hash not present, continue submissio
+    :return: status code 204 -- hash not present, continue submission
     :return: status code 201 -- hash already exists, drop submission
     """
     db = get_db()
@@ -93,6 +106,28 @@ def raw_endpoint():
     # User submitted an unsupported content-type
     else:
         return Response(status=400)
+
+#@TODO: Implicit or Explicit group additions? Issue #51 comments on the issues page
+#@TODO: Add form validation
+@app.route('/requestnewgroup/', methods=['POST'])
+def request_new_group():
+    # Grab submission form data and prepare email message
+    data = json.loads(request.data)
+    msg = "Someone has request that you add %s to the leaderboard groups. \
+            The groups website is %s and the submitter can be reached at %s." \
+         % (data['new_group_name'], data['new_group_website'], data['submitter_email'])
+    return Response(status=200)
+    '''
+    try:
+        email(
+            subject="SciNet: A new group has been requested",
+            fro="no-reply@scinet.osf.io",
+            to='harry@scinet.osf.io',
+            msg=msg)
+        return Response(status=200)
+    except:
+        return Response(status=500)
+    '''
 
 # Error handlers
 @app.errorhandler(404)
