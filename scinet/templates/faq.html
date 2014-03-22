@@ -1,147 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Harry Rybacki and Joshua Carp">
-    <link rel="shortcut icon" href="../static/img/favicon.ico">
+{% extends "base.html" %}
 
-    <title>SciNet Citelet FAQ</title>
+{% block title %}OSF SciNet: FAQ{% endblock %} <!-- end title block -->
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
+{% block head %}
+{% endblock %} <!-- end head block -->
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../static/js/html5shiv.js"></script>
-      <script src="../static/js/respond.min.js"></script>
-    <![endif]-->
+{% block content %}
 
-    <style type="text/css">
-      /* Custom container */
-      .container {
-        max-width: 730px;
-      }
-      /* Custom row  */
-      .row {
-        text-align: center;
-      }
-      .row h1 {
-        font-size: 72px;
-      }
-      .row .btn {
-        font-size: 21px;
-      }
-  </style>
-
-  </head>
-
-  <body>
-
-    <div class="container">
-
-      <div class="header">
+    <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><a href="/">Home</a></li>
-          <li><a href="/citelet/">Citelet</a></li>
-          <li class="active"><a href="#">FAQ</a></li>
-          <li><a class="hidden" href="/crowdscholar/">Crowd Scholar</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/citelet/">Citelet</a></li>
+            <li class="active"><a href="#">FAQ</a></li>
+            <li><a href="/scinet/leaderboard/">Leaderboard</a></li>
         </ul>
         <h3 class="text-muted">OSF SciNet</h3>
-      </div>
+    </div>
 
-      <div class="row">
+    <div class="row">
         <div class="col-lg-12">
 
-          <hr />
-          <h1>SciNet Citelet</h1>
-          <h2>Frequently Asked Questions</h2>
-          <hr />
-          
-          <dl style="text-align: left;">
-            <dt>Q: How does Citelet work?</dt>
-            <dd>A: Whenever you view an article on a website, Citelet first determines if it is from a publisher from which metadata can be extracted. If it is, Citelet determines whether the dataset already has the article.   If it does not, then Citelet captures the citation and reference information and sends it all to our system for processing and storage.</dd> 
-            <br /> 
-            <dt>Q: Why does Citelet look for a publisher on each page? Can’t you just look at the URL?</dt>
-            <dd>A: Unfortunately, it’s not quite this simple. Many articles are behind paywalls and only available through an institutional subscription or via direct purchase.  Managing this process involves changes to the URL that you see. As a result, Citelet must check the source code of each page for something unique to identify a publishing source.</dd> 
-            <br /> 
-            <dt>Q: What information does Citelet gather?</dt>
-            <dd>A: Each scientific article contains a large set of metadata including the title, author(s), journal name, publication data, and citations. Citelet’s goal is to collect as much of this metadata as possible before sending it to our system.</dd> 
-            <br /> 
-            <dt>Q: What about the text and figures?</dt>
-            <dd>A: Citelet does not make any attempt to gather this or any other copyrighted data. Our goal is solely to collect the metadata about an article to help create a free, open, and comprehensive dataset.</dd>
-            <br /> 
-            <dt>Q: How does Citelet protect my privacy and identity?</dt>
-            <dd>A: The only information Citelet gathers from the user is the IP address of the machine they were using.  This is simply a usage statistic that will help us determine where in the world Citelet is making the biggest impact.   This information will be protected and not used for any other purpose.</dd>
-            <br /> 
-            <dt>Q: How many publishing sources does Citelet currently support?</dt>
-            <dd>A: We currently support 27 publishing sources.</dd>
-            <br />
-            <dt class="hidde">Q: Which publishing sources does that include?</dt>
-            <dd class="hiddn">A: 
-              <ul>
-                <li>American Chemical Society</li>
-                <li>American Medical Association</li>
-                <li>Annals of Mathematics</li>
-                <li>American Psychological Association</li>
-                <li>BioMed Central</li>
-                <li>Duke University Press</li>
-                <li>eLife</li>
-                <li>Faculty 1000 Research</li>
-                <li>Frontiers</li>
-                <li>Highwire</li>
-                <li>Hindawi Publishing Corporation</li>
-                <li>Hogrefe</li>
-                <li>Institute of Physics</li>
-                <li>Lippincott Williams &amp; Wilkins</li>
-                <li>MIT Press</li>
-                <li>Nature</li>
-                <li>Ovid</li>
-                <li>PeerJ</li>
-                <li>PLoS</li>
-                <li>PubMed Central</li>
-                <li>Royal Society of Chemistry</li>
-                <li>ScienceDirect</li>
-                <li>Society for Industrial and Applied Mathematics</li>
-                <li>Springer</li>
-                <li>Taylor &amp; Francis</li>
-                <li>Thieme</li>
-                <li>Wiley</li>
-              </ul>
-            </dd>
-            <br />
-            <dt>Q: Where do I go if I have a suggestion or want another publisher added to the list?</dt>
-            <dd>A: Any feature or enhancement suggestions can be submitted by filling out a <a href=https://github.com/jmcarp/citelet/issues/new>new issue</a> ticket on our GitHub page.</dd>
-            <br />
-            <dt>Q: I am a developer. Where can I find the source code for review/comments/contribution?</dt>
-            <dd>A: You can find the Citelet repository on <a href=https://github.com/jmcarp/citelet>GitHub</a>. For our other related libraries please visit the <a href=https://github.com/ProjectScholarly>GitHub organization page</a> or click on the Octocat icon in the footer.</dd>
-          </dl>
+            <hr />
+            <h1>OSF SciNet</h1>
+            <h2>Frequently Asked Questions</h2>
+            <hr />
 
-          <hr />
+            <dl style="text-align: left;">
+                <dt>Q: How does Citelet work?</dt>
+                <dd>A: Whenever you view an article on a website, Citelet first determines if it is from a publisher from which metadata can be extracted. If it is, Citelet determines whether the dataset already has the article.   If it does not, then Citelet captures the citation and reference information and sends it all to our system for processing and storage.</dd>
+                <br />
+                <dt>Q: Why does Citelet look for a publisher on each page? Can’t you just look at the URL?</dt>
+                <dd>A: Unfortunately, it’s not quite this simple. Many articles are behind paywalls and only available through an institutional subscription or via direct purchase.  Managing this process involves changes to the URL that you see. As a result, Citelet must check the source code of each page for something unique to identify a publishing source.</dd>
+                <br />
+                <dt>Q: What information does Citelet gather?</dt>
+                <dd>A: Each scientific article contains a large set of metadata including the title, author(s), journal name, publication data, and citations. Citelet’s goal is to collect as much of this metadata as possible before sending it to our system.</dd>
+                <br />
+                <dt>Q: What about the text and figures?</dt>
+                <dd>A: Citelet does not make any attempt to gather this or any other copyrighted data. Our goal is solely to collect the metadata about an article to help create a free, open, and comprehensive dataset.</dd>
+                <br />
+                <dt>Q: How does Citelet protect my privacy and identity?</dt>
+                <dd>A: The only information Citelet gathers from the user is the IP address of the machine they were using.  This is simply a usage statistic that will help us determine where in the world Citelet is making the biggest impact.   This information will be protected and not used for any other purpose.</dd>
+                <br />
+                <dt>Q: How many publishing sources does Citelet currently support?</dt>
+                <dd>A: We currently support 27 publishing sources.</dd>
+                <br />
+                <dt class="hidde">Q: Which publishing sources does that include?</dt>
+                <dd class="hiddn">A:
+                <ul>
+                    <li>American Chemical Society</li>
+                    <li>American Medical Association</li>
+                    <li>Annals of Mathematics</li>
+                    <li>American Psychological Association</li>
+                    <li>BioMed Central</li>
+                    <li>Duke University Press</li>
+                    <li>eLife</li>
+                    <li>Faculty 1000 Research</li>
+                    <li>Frontiers</li>
+                    <li>Highwire</li>
+                    <li>Hindawi Publishing Corporation</li>
+                    <li>Hogrefe</li>
+                    <li>Institute of Physics</li>
+                    <li>Lippincott Williams &amp; Wilkins</li>
+                    <li>MIT Press</li>
+                    <li>Nature</li>
+                    <li>Ovid</li>
+                    <li>PeerJ</li>
+                    <li>PLoS</li>
+                    <li>PubMed Central</li>
+                    <li>Royal Society of Chemistry</li>
+                    <li>ScienceDirect</li>
+                    <li>Society for Industrial and Applied Mathematics</li>
+                    <li>Springer</li>
+                    <li>Taylor &amp; Francis</li>
+                    <li>Thieme</li>
+                    <li>Wiley</li>
+                </ul>
+                </dd>
+                <br />
+                <dt>Q: Where do I go if I have a suggestion or want another publisher added to the list?</dt>
+                <dd>A: Any feature or enhancement suggestions can be submitted by filling out a <a href=https://github.com/jmcarp/citelet/issues/new>new issue</a> ticket on our GitHub page.</dd>
+                <br />
+                <dt>Q: I am a developer. Where can I find the source code for review/comments/contribution?</dt>
+                <dd>A: You can find the Citelet repository on <a href=https://github.com/jmcarp/citelet>GitHub</a>. For our other related libraries please visit the <a href=https://github.com/ProjectScholarly>GitHub organization page</a> or click on the Octocat icon in the footer.</dd>
+            </dl>
+
+<hr />
         </div>
-      </div>
-
-      <div class="footer">
-        <div class="row">
-          <div class="col-md-2"></div>
-          <div class="col-md-4"><p>&copy; Center for Open Science 2014</p></div>
-          <div class="col-md-4">
-            <a href="http://twitter.com/OSFramework"><img src="/static/img/twitter_alt.png" alt="Twitter" height="24" width="24"></a>
-            <a href="https://www.facebook.com/OpenScienceFramework"><img src="/static/img/facebook.png" alt="Facebook" height="24" width="24"></a>
-            <a href="https://groups.google.com/forum/#!forum/openscienceframework"><img src="/static/img/google.png" alt="Google Group" height="24" width="24"></a>
-            <a href="https://github.com/CenterForOpenScience/scinet"><img src="/static/img/github_alt.png" alt="GitHub" height="24" width="24"></a>
-            <a href="https://plus.google.com/103557785986281627994" rel="publisher"><img src="/static/img/googleplus.png" alt="Google Plus" height="24" width="24"></a>
-          <div class="col-md-2"></div>
-          </div>
-        </div>
-      </div>
-
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-</html>
+    </div>
+{% endblock %} <!-- end content block -->

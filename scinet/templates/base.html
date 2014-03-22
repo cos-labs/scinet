@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Harry Rybacki and Joshua Carp">
+  <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+  <title>{%  block title %}{% endblock %}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/css/bootstrap.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+  <![endif]-->
+  <!-- Google Analytics -->
+  <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-41353109-2', 'osf.io'); ga('send', 'pageview');</script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <style type="text/css">
+    /* Custom container */
+    .container {
+      max-width: 730px;
+    }
+    /* Custom row  */
+    .row {
+      text-align: center;
+    }
+    .row h1 {
+      font-size: 72px;
+    }
+    .row .btn {
+      font-size: 21px;
+    }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+
+  <div class="container">
+
+  {% block content %}{% endblock %}
+
+  <div class="footer">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-4"><p>&copy; Center for Open Science 2014</p></div>
+      <div class="col-md-4">
+        <a href="http://twitter.com/OSFramework"><img src="/static/img/twitter_alt.png" alt="Twitter" height="24" width="24"></a>
+        <a href="https://www.facebook.com/OpenScienceFramework"><img src="/static/img/facebook.png" alt="Facebook" height="24" width="24"></a>
+        <a href="https://groups.google.com/forum/#!forum/openscienceframework"><img src="/static/img/google.png" alt="Google Group" height="24" width="24"></a>
+        <a href="https://github.com/centerforopenscience/"><img src="/static/img/github_alt.png" alt="GitHub" height="24" width="24"></a>
+        <a href="https://plus.google.com/103557785986281627994" rel="publisher"><img src="/static/img/googleplus.png" alt="Google Plus" height="24" width="24"></a>
+      <div class="col-md-2"></div>
+      </div>
+    </div>
+  </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>

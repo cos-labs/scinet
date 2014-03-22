@@ -43,11 +43,13 @@ def index():
     return render_template("index.html")
 
 @app.route('/faq/')
+@app.route('/scinet/faq/')
 def faq():
     """FAQ page for SciNet"""
     return render_template("faq.html")
 
 @app.route('/leaderboard/')
+@app.route('/scinet/leaderboard/')
 def leaderboard():
     """Leaderboard page for SciNet"""
     get_db()
@@ -69,12 +71,14 @@ def ping_endpoint():
         return Response(status=204)
 
 @app.route('/articles')
-def ArticleEndpoint():
+def article_endpoint():
     """Eventual landing page for searching/retrieving articles"""
     if request.method == 'GET':
         return render_template("articles.html")
 
-@app.route('/raw', methods=['POST'])
+
+@app.route('/raw/', methods=['GET', 'POST'])
+@app.route('/scinet/raw/', methods=['GET', 'POST'])
 def raw_endpoint():
     """API endpoint for submitting raw article data
 
@@ -82,28 +86,33 @@ def raw_endpoint():
     :return: status code 400 - unsupported content-type or invalid publisher
     :return: status code 201 - successful submission
     """
-    # Ensure post's content-type is supported
-    if request.headers['content-type'] == 'application/json':
-        # Ensure data is a valid JSON
-        try:
-            user_submission = json.loads(request.data)
-        except ValueError:
-            return Response(status=405)
-        # generate UID for new entry
-        uid = get_id()
-        # store incoming JSON in raw storage
-        file_path = os.path.join(
-                        HERE,
-                        'raw_payloads',
-                        str(uid)
-                    )
-        store_json_to_file(user_submission, file_path)
-        # hand submission to controller and return Resposne
+    if request.method == 'GET':
         db = get_db()
-        controller_response = JSONController(user_submission, db=db, _id=uid).submit()
-        return controller_response
+        return make_response(jsonify({'numArticles': db[app.config['DB_ARTICLES_COLLECTION']].count()}), 200)
 
-    # User submitted an unsupported content-type
+    elif request.method == 'POST':
+        # Ensure post's content-type is supported
+        if request.headers['content-type'] == 'application/json':
+            # Ensure data is a valid JSON
+            try:
+                user_submission = json.loads(request.data)
+            except ValueError:
+                return Response(status=405)
+            # generate UID for new entry
+            uid = get_id()
+            # store incoming JSON in raw storage
+            file_path = os.path.join(
+                            HERE,
+                            'raw_payloads',
+                            str(uid)
+                        )
+            store_json_to_file(user_submission, file_path)
+            # hand submission to controller and return Resposne
+            db = get_db()
+            controller_response = JSONController(user_submission, db=db, _id=uid).submit()
+            return controller_response
+
+        # User submitted an unsupported content-type
     else:
         return Response(status=400)
 

@@ -1,85 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Harry Rybacki and Joshua Carp">
-    <link rel="shortcut icon" href="../static/img/favicon.ico">
+{% extends "base.html" %}
 
-    <title>Crowd Scholar</title>
+{% block title %}OSF SciNet{% endblock %} <!-- end title block -->
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.css" rel="stylesheet">
+{% block head %}
+    <script>
+        $( document ).ready(function() {
+            $.get ("/scinet/raw", function(data) {
+            $( ".articleCounter" ).html(data.numArticles);
+        });
+    });
+    </script>
+{% endblock %} <!-- end head block -->
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../static/js/html5shiv.js"></script>
-      <script src="../static/js/respond.min.js"></script>
-    <![endif]-->
-
-    <style type="text/css">
-      /* Custom container */
-      .container {
-        max-width: 730px;
-      }
-      /* Custom row  */
-      .row {
-        text-align: center;
-      }
-      .row h1 {
-        font-size: 72px;
-      }
-      .row .btn {
-        font-size: 21px;
-
-      }
-  </style>
-
-  </head>
-
-  <body>
-
-    <div class="container">
-
-      <div class="header">
+{% block content %}
+    <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><a href="/">Home</a></li>
-          <li><a href="/citelet/">Citelet</a></li>
-          <li class="active"><a href="#">Crowd Scholar</a></li>
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="/citelet/">Citelet</a></li>
+            <li><a href="/scinet/faq/">FAQ</a></li>
+            <li><a href="/scinet/leaderboard/">Leaderboard</a></li>
         </ul>
-        <h3 class="text-muted">Crowd Scholar</h3>
-      </div>
+        <h3 class="text-muted">OSF SciNet</h3>
+    </div>
 
-      <div class="row">
+    <div class="row">
         <div class="col-lg-12">
+            <hr />
+            <h1>OSF SciNet</h1>
+            <h2>Crowd-Sourcing the Scientific Citation Network</h2>
+            <h3><button type="button" class="articleCounter btn btn-default btn-success"></button> articles contributed</h3>
+            <hr />
 
-          <hr />
-          <h1>Crowd Scholar</h1>
-          <h2>Crowd-Sourcing the Academic Citation Graph</h2>
-          <hr />
+            <h2><img src="/static/img/circle1.png" /> Problem</h2>
+            <p class="lead">Scientific citations are frequently <span class="text-danger">constrained by terms-of-use or within proprietary systems</span> making it difficult to see connections in the literature.<!-- Services like PubMed have made research easier in the biomedical science domain, but <span class="text-danger">no such solution exists</span> that cuts across all areas of science in a fully open way.--></p>
 
-          <p class="lead">
-            Crowd Scholar provides users with a clean and easy-to-use web interface that gives users the power to enter article information manually, copy and paste it into a form, or programmatically with our API.       
-          </p>
+            <h2><img src="/static/img/circle2.png" /> Solution</h2>
+            <p class="lead">OSF SciNet uses the open source Citelet extension to <span class="text-danger">crowdsource a free, open, and comprehensive metadata dataset</span> of scientific citations and corresponding references to unlock the citation network. <!--This dataset will give the public <span class="text-danger">complete, free, and open access</span> to analyze and distribute scientific citation metadata without limitations imposed by proprietary services.--></p>
 
-          <p>
-            <strong>Note:</strong> Crowd Scholar is currently being redeveloped. Sorry for any inconvenience, please check back soon for updates!
-          </p>
+            <h2><img src="/static/img/circle3.png" /> Impact</h2>
+            <p class="lead">The dataset generated through this project will make it easier to <span class="text-danger">see the connections in the scientific literature and to promote open science</span>.</p>
 
-          <hr />
+            <h2><img src="/static/img/circle4.png" /> Contribute</h2>
+            <p class="lead">Add the <a href="/citelet">Citelet extension</a> to your Chrome browser and start contributing.</p>
+            <p class="lead"><strong>Coming Soon:</strong> API for SciNet, Public release of the accumulating citation dataset, and more.</p>
+
+            <hr />
         </div>
-      </div>
-
-      <div class="footer">
-        <p>&copy; Center for Open Science 2013</p>
-      </div>
-
-    </div> <!-- /container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-</html>
+    </div>
+{% endblock %} <!-- end content block -->
