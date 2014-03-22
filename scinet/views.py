@@ -26,7 +26,7 @@ def get_db():
     if not hasattr(g, 'mongo_client'):
         g.mongo_client = connect_client()
         g.mongo_db = getattr(g.mongo_client, app.config['DB_NAME'])
-        g.groups_collection = g.mongo_db[os.environ.get('DB_GROUPS_COLLECTION')]
+        g.groups_collection = g.mongo_db[app.config['DB_GROUPS_COLLECTION']]
     return g.mongo_db
 
 @app.teardown_appcontext

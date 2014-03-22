@@ -10,7 +10,7 @@
             $("#requestNewGroup :input").each(function(){
                     data[$(this).attr("name")] = $(this).val();
             });
-            $.ajax("requestnewgroup/", {
+            $.ajax("/scinet/requestnewgroup/", {
                 type: "POST",
                 data: JSON.stringify(data),
                 contentType: "application/json",
@@ -56,7 +56,7 @@
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td>{{ group['group_name'] }}</td>
-                        <td>{{ group['successful_submissions'] }}</td>
+                        <td>{{ group['submissions'] }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
