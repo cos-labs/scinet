@@ -56,6 +56,22 @@ def leaderboard():
     groups = get_groups(g.groups_collection)
     return render_template("leaderboard.html", groups=groups)
 
+@app.route('/getgroups/')
+@app.route('/scinet/getgroups/')
+def get_group_data():
+    """Leaderboard page for SciNet"""
+    # Get group info from DB
+    get_db()
+    groups = get_groups(g.groups_collection)
+
+    # Convert ObjectIDs into strings
+    for group in groups:
+        group['_id'] = str(group['_id'])
+
+    # Convert payload into JSON and return
+    groups = json.dumps(groups)
+    return groups
+
 @app.route('/ping', methods=['POST'])
 def ping_endpoint():
     """API endpoint determines potential article hash exists in db
