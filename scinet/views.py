@@ -64,13 +64,15 @@ def get_group_data():
     get_db()
     groups = get_groups(g.groups_collection)
 
-    # Convert ObjectIDs into strings
+    # Convert list of groups into JSON
+    payload = {}
     for group in groups:
-        group['_id'] = str(group['_id'])
+        payload[str(group['_id'])] = {
+            'name': group['group_name'],
+            'submissions': int(group['submissions'])
+        }
 
-    # Convert payload into JSON and return
-    groups = json.dumps(groups)
-    return groups
+    return make_response(jsonify(payload))
 
 @app.route('/ping', methods=['POST'])
 def ping_endpoint():
